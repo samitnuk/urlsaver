@@ -9,8 +9,8 @@ Because I want to learn Python (like a hobby) and how it can be used for web, I 
 For now I can test all this just on my PC, but in this app I will use URL "urlsaver.ua" instead of "127.0.0.1".
 
 So this app should work next way:
-* if you add "urlsaver.ua" before any path in browser, it will save path (for example: __urlsaver.ua/__https://translate.google.com.ua save path https://translate.google.com.ua).
-* if you add "groupname.urlsaver.ua" before any path in browser, it will save path and add it to group "groupname" - so subdomain will mean group for path (for example: __translator.urlsaver.ua/__https://translate.google.com.ua save path https://translate.google.com.ua to group "translator").
+* if you add "urlsaver.ua" before any path in browser, it will save path (for example: "urlsaver.ua/https://translate.google.com.ua" save path https://translate.google.com.ua).
+* if you add "groupname.urlsaver.ua" before any path in browser, it will save path and add it to group "groupname" - so subdomain will mean group for path (for example: "translator.urlsaver.ua/https://translate.google.com.ua" save path https://translate.google.com.ua to group "translator").
 
 
 ###### Notes:
