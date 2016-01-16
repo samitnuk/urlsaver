@@ -11,7 +11,7 @@ For now I can test all this just on my PC, but in this app I will use URL "urlsa
 So this app should work next way:
 * if you add "urlsaver.ua" before any path in browser, it will save path (for example: "urlsaver.ua/https://translate.google.com.ua" save path https://translate.google.com.ua).
 * if you add "groupname.urlsaver.ua" before any path in browser, it will save path and add it to group "groupname" - so subdomain will mean group for path (for example: "translator.urlsaver.ua/https://translate.google.com.ua" save path https://translate.google.com.ua to group "translator").
-
+***
 
 ###### Notes:
 For testing this app on PC to etc/hosts should be added couple lines similar to these:
@@ -22,4 +22,4 @@ For testing this app on PC to etc/hosts should be added couple lines similar to 
 ...
 127.0.0.1		groupnameN.urlsaver.ua
 ```
-All subdomains (from "groupname1 to groupnameN") will work on local PC all other will not. But any subdomains will work on real server.
+All subdomains (from "groupname1 to groupnameN") will work on local PCand all other will not. But any subdomains will work on real server.
