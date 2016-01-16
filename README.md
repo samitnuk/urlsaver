@@ -13,13 +13,14 @@ So this app should work next way:
 * if you add "groupname.urlsaver.ua" before any path in browser, it will save path and add it to group "groupname" - so subdomain will mean group for path (for example: "translator.urlsaver.ua/https://translate.google.com.ua" save path https://translate.google.com.ua to group "translator").
 ***
 
+
 ###### Notes:
 For testing this app on PC to etc/hosts should be added couple lines similar to these:
-```python
-127.0.0.1		urlsaver.ua
-127.0.0.1		groupname1.urlsaver.ua
-127.0.0.1		groupname2.urlsaver.ua
-...
-127.0.0.1		groupnameN.urlsaver.ua
-```
+
+127.0.0.1		urlsaver.ua 
+127.0.0.1		groupname1.urlsaver.ua 
+127.0.0.1		groupname2.urlsaver.ua 
+... 
+127.0.0.1		groupnameN.urlsaver.ua 
+
 All subdomains (from "groupname1 to groupnameN") will work on local PCand all other will not. But any subdomains will work on real server.
