@@ -17,16 +17,12 @@ So this app should work next way:
 
 ###### Notes:
 For testing this app on PC to etc/hosts should be added couple lines similar to these:
-
+```
 127.0.0.1		urlsaver.ua
-
 127.0.0.1		groupname1.urlsaver.ua
-
 127.0.0.1		groupname2.urlsaver.ua
-
 ...
-
 127.0.0.1		groupnameN.urlsaver.ua
-
+```
 
 All subdomains (from "groupname1 to groupnameN") will work on local PCand all other will not. But any subdomains will work on real server.
