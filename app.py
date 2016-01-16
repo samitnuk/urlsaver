@@ -3,7 +3,7 @@ from flask import Blueprint
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SERVER_NAME'] = 'urlsaver.io:5000'
+app.config['SERVER_NAME'] = 'urlsaver.ua:5000'
 
 @app.route("/")
 @app.route("/<path:path>")
