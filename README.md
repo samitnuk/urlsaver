@@ -13,7 +13,6 @@ So this app should work next way:
 * if you add "groupname.urlsaver.ua" before any path in browser, it will save path and add it to group "groupname" - so subdomain will mean group for path (for example: "translator.urlsaver.ua/https://translate.google.com.ua" save path https://translate.google.com.ua to group "translator").
 
 
-
 ---
 
 

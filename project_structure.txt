@@ -10,7 +10,7 @@
 |       |       | models.py
 |       |       | views.py
 |       | venv/
-|       |       |...
+|       |       | ...
 |       | app.py
 |       | config.py
 |       | LICENSE
