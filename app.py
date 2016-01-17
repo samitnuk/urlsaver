@@ -10,7 +10,7 @@ app.config['SERVER_NAME'] = 'urlsaver.ua:5000'
 def hello_world(path=None):
 	if path:
 		return "<i>Path for saving: </i>" + path
-	return "Hello World!"
+	return "This is main page!"
 
 # Blueprint declaration
 bp = Blueprint('subdomain', __name__, subdomain="<group>")
