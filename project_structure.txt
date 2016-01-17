@@ -1,0 +1,21 @@
+urlsaver/
+        app/
+                static/
+                        css/
+                        images/
+                        js
+                templates/
+
+                forms.py
+                __init__.py
+                models.py
+                views.py
+        venv/
+                ...
+        app.py
+        config.py
+        LICENSE
+        project_structure.txt
+        README.md
+        requirements.txt
+        run_urlsaver.py
