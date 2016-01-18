@@ -33,14 +33,13 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
-class Post(db.Model):
-    __tablename__ = 'posts'
+class URLs(db.Model):
+    __tablename__ = 'URLs'
     id = db.Column(db.Integer, primary_key = True)
-    # title = db.Column(db.String(100))
-    # foldername = db.Column(db.String(105))
-    # date = db.Column(db.Date)
-    # qty = db.Column(db.Integer)  # number of uploaded photos
+    url = db.Column(db.String(500))
+    groupname = db.Column(db.String(25))
+    date = db.Column(db.Date)
     username = db.Column(db.String(64), ForeignKey('users.username'))
 
     def __repr__(self):
-        return '<Post %r>' % (self.title)
+        return '<URLs %r>' % (self.url)
