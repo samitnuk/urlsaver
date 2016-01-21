@@ -6,6 +6,7 @@
 |       |       |       | js/
 |       |       | templates/
 |       |       | forms.py
+|		|		| helpers.py
 |       |       | __init__.py
 |       |       | models.py
 |       |       | views.py
