@@ -1,4 +1,4 @@
-# import os
+import os
 
 #/ GENERAL SETTINGS /--------------------------------------------------------
 DEBUG = True
@@ -11,10 +11,12 @@ SECRET_KEY = 'ababagalamagaababagalamaga'
 
 
 #/ FOR DATABASE /------------------------------------------------------------
-# basedir = os.path.abspath(os.path.dirname(__file__))
-# SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
-# SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+basedir = os.path.abspath(os.path.dirname(__file__))
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'urlsaver.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+# http://flask-sqlalchemy.pocoo.org/2.1/config/#configuration-keys
 
 #/ FOR ERRORS /--------------------------------------------------------------
 # ERROR_PAGE_NUM = 'Unfortunately page with number %s does not exist.'

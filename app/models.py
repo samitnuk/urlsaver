@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64), unique = True)
     email = db.Column(db.String(120), unique = True)
@@ -33,13 +33,14 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
-class URLs(db.Model):
-    __tablename__ = 'URLs'
+# class with name URL does not work (URL - Uniform Resource Locator)
+class Locator(db.Model):
+    __tablename__ = 'locator'
     id = db.Column(db.Integer, primary_key = True)
     url = db.Column(db.String(500))
     groupname = db.Column(db.String(25))
     date = db.Column(db.Date)
-    username = db.Column(db.String(64), ForeignKey('users.username'))
+    username = db.Column(db.String(64), ForeignKey('user.username'))
 
     def __repr__(self):
-        return '<URLs %r>' % (self.url)
+        return '<URL %r>' % (self.url)

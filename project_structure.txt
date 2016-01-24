@@ -2,7 +2,12 @@
 |       | app/
 |       |       | static/
 |       |       |       | css/
-|       |       |       | images/
+|       |       |       |       bootstrap.css
+|       |       |       |       font-awesome.css
+|       |       |       |       style.css
+|       |       |       |       style-responsive.css
+|       |       |       | fonts/
+|       |       |       | img/
 |       |       |       | js/
 |       |       | templates/
 |       |       | forms.py
@@ -10,12 +15,17 @@
 |       |       | __init__.py
 |       |       | models.py
 |       |       | views.py
+|       | db_repository/
+|       |       | ...
 |       | venv/
 |       |       | ...
 |       | app.py
 |       | config.py
+|       | db_create.py
+|       | db_migrate.py
 |       | LICENSE
 |       | project_structure.txt
 |       | README.md
 |       | requirements.txt
 |       | run_urlsaver.py
+|       | urlsaver.db

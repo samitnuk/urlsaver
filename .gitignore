@@ -1,2 +1,4 @@
 *.py[cod]
+*.db
 venv/
+db_repository/

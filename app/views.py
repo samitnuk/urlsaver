@@ -1,11 +1,11 @@
-# from datetime import date
+from datetime import date
 
 from flask import render_template, redirect, request, session, url_for
 # from flask.ext.login import (LoginManager, login_user, logout_user,
 #                              current_user, login_required)
 
 from app import app, bp #, db
-# from models import Post, User
+from models import User, Locator
 # from forms import LoginForm, RegistrationForm, AddPostForm
 
 # lm = LoginManager()
@@ -23,9 +23,9 @@ def hello_world(path=None):
 	return "This is main page!"
 
 # Add a route to the blueprint
-@bp.route("/")
-def home(group):
-    return 'Welcome to your subdomain, {}'.format(group)
+@bp.route("/<path:path>")
+def home(groupname, path):
+    return 'Welcome to your subdomain, {}'.format(groupname)
 
 # Register the blueprint into the application
 app.register_blueprint(bp)

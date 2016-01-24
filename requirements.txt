@@ -1,4 +1,6 @@
 Flask
+flask-sqlalchemy
+sqlalchemy-migrate
 
 requests
 beautifulsoup4
