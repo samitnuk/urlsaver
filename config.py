@@ -7,7 +7,7 @@ SERVER_NAME = 'urlsaver.ua:5000'
 
 #/ FOR FORMS /---------------------------------------------------------------
 CSRF_ENABLED = True
-SECRET_KEY = 'ababagalamagaababagalamaga'
+SECRET_KEY = os.urandom(24)
 
 
 #/ FOR DATABASE /------------------------------------------------------------

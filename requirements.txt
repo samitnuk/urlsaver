@@ -1,6 +1,8 @@
 Flask
 flask-sqlalchemy
 sqlalchemy-migrate
+flask-wtf
+flask-login
 
 requests
 beautifulsoup4

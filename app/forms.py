@@ -3,7 +3,7 @@ from flask.ext.wtf import Form
 from wtforms import TextField, PasswordField, validators
 
 from app import db
-from models import User, URLs
+from models import User, Locator
 
 #----------------------------------------------------------------------------
 class LoginForm(Form):
