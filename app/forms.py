@@ -26,11 +26,12 @@ class LoginForm(Form):
 #----------------------------------------------------------------------------
 class RegistrationForm(Form):
     username = TextField('Username', [validators.Required()])
-    email = TextField('Email Address')
-    password = PasswordField('Password', [validators.Required(),
-                                          validators.EqualTo('confirm',
-                                          message='Passwords must match')])
-    confirm = PasswordField('Repeat Password')
+    email = TextField('Email Address', [validators.Required()])
+    password = PasswordField('Password', [validators.Required()])
+    confirm = PasswordField('Repeat Password',
+                            [validators.Required(), 
+                             validators.EqualTo('password',
+                             message='Passwords must match')])
 
     def validate_username(self, field):
         if db.session.query(User)\
