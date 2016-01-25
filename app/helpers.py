@@ -6,35 +6,27 @@ requests.packages.urllib3.disable_warnings()
 
 from bs4 import BeautifulSoup
 
-def get_html(url):
-    # without User-agent from some https sites will be received 403
-    response = requests.get(url,headers={'User-Agent': 'python'},
-                            verify=False)
-    return response.text
-
-def url_validator(url):
+def url_exists(url):
     try:
-        response = requests.get(url, headers={'User-Agent': 'python'},
-                                verify=False)
-        return response.status_code == 200
+        # without User-agent from some https sites will be received 403
+        r = requests.head(url, headers={'User-Agent': 'Flask'}, verify=False)
+        return r.status_code == requests.codes.ok # == 200
     except ConnectionError:
         return False
 
-def get_title(html):
-    soup = BeautifulSoup(html, "html.parser")
-    title = soup.find('title').text
-    return title
-
-def get_path(path, groupname=""):
-    pass
+def get_title(url):
+    r = requests.get(url, headers={'User-Agent': 'Flask'}, verify=False)
+    soup = BeautifulSoup(r.text, "html.parser")
+    return soup.find('title').text
 
 #/ FOR TESTS /---------------------------------------------------------------
 def main():
     url = 'https://fantlab.ru/autor1667'
     print ""
-    print url_validator(url)
-    print get_title(get_html(url))
-    print ""
+    if url_exists(url):
+        print get_title(url)
+    else:
+        print url_exists(url)
 
 if __name__ == '__main__':
     main()
