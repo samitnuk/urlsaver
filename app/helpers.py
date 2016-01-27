@@ -48,20 +48,15 @@ def main(path=None):
     if path:
         if urlparse(path).scheme and url_exists(path):
             if current_user.is_authenticated:
-                locator = Locator(url=path,
-                                  title=get_title(path),
-                                  groupname="",
-                                  date=datetime.today(),
-                                  username=current_user.username)
-                db.session.add(locator)
-                db.session.commit()
+                save_url(path, ''))
                 return redirect(url_for('main'))
             session['url'] = path
             return redirect(url_for('login'))
         return redirect(url_for('main'))
     if session['url']:
-
-
+        save_url(session['url'], getattr(session, 'groupname', ''))
+        session['url'], session['groupname'] = '', ''
+        return redirect(url_for('main'))
     else:
         if current_user.is_authenticated:
             urls = db.session.query(Locator)\
@@ -70,8 +65,9 @@ def main(path=None):
         return render_template('home.html')
 
 def save_url(path, groupname):
-    locator = Locator(url=path, title=get_title(path), groupname=groupname,
-                      date=datetime.today(), username=current_user.username)
+    locator = Locator(url=path, title=get_title(path),
+                      groupname=groupname, date=datetime.today(),
+                      username=current_user.username)
     db.session.add(locator)
     db.session.commit()
-    return redirect(url_for('main'))
+    # return

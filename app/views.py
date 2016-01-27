@@ -15,8 +15,8 @@ lm.init_app(app)
 def get_user(user_id):
     return db.session.query(User).get(user_id)
 
-@app.route("/")
-@app.route("/<path:path>")
+@app.route('/')
+@app.route('/<path:path>')
 def main(path=None):
     if path:
         return "<i>Path for saving: </i>" + path
