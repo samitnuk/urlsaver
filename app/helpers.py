@@ -49,19 +49,29 @@ def main(path=None):
         if urlparse(path).scheme and url_exists(path):
             if current_user.is_authenticated:
                 locator = Locator(url=path,
-                                  title=get_title(url),
+                                  title=get_title(path),
                                   groupname="",
                                   date=datetime.today(),
                                   username=current_user.username)
                 db.session.add(locator)
                 db.session.commit()
                 return redirect(url_for('main'))
-
-            return 
+            session['url'] = path
+            return redirect(url_for('login'))
         return redirect(url_for('main'))
+    if session['url']:
+
+
     else:
         if current_user.is_authenticated:
             urls = db.session.query(Locator)\
                 .filter_by(username=current_user.username).all()
             return render_template('urls.html', urls=urls)
         return render_template('home.html')
+
+def save_url(path, groupname):
+    locator = Locator(url=path, title=get_title(path), groupname=groupname,
+                      date=datetime.today(), username=current_user.username)
+    db.session.add(locator)
+    db.session.commit()
+    return redirect(url_for('main'))
