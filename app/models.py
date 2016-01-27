@@ -38,6 +38,7 @@ class Locator(db.Model):
     __tablename__ = 'locator'
     id = db.Column(db.Integer, primary_key = True)
     url = db.Column(db.String(500))
+    title = db.Column(db.String(500))
     groupname = db.Column(db.String(25))
     date = db.Column(db.Date)
     username = db.Column(db.String(64), ForeignKey('user.username'))

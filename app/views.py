@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from flask import render_template, redirect, request, session, url_for
 from flask.ext.login import (LoginManager, login_user, logout_user,
@@ -25,6 +25,7 @@ def main(path=None):
     else:
         return "Welcome to this page"
 
+# ----------------------------------------------------------------------------
 # Add a route to the blueprint
 @bp.route("/<path:path>")
 def home(groupname, path):

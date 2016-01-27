@@ -1,5 +1,6 @@
 import requests
 from requests.exceptions import ConnectionError
+from urlparse import urlparse
 
 # without this will be received SNIMissingWarning from https sites
 requests.packages.urllib3.disable_warnings()
@@ -19,14 +20,48 @@ def get_title(url):
     soup = BeautifulSoup(r.text, "html.parser")
     return soup.find('title').text
 
+def is_correct_path(path):
+    o = urlparse(path)
+    return o.scheme, o.netloc
+
+
 #/ FOR TESTS /---------------------------------------------------------------
 def main():
     url = 'https://fantlab.ru/autor1667'
-    print ""
-    if url_exists(url):
-        print get_title(url)
-    else:
-        print url_exists(url)
+    # url = '//my/name'
+    print
+    # if url_exists(url):
+    #     print get_title(url)
+    # else:
+    #     print url_exists(url)
+    print is_correct_path(url)
 
 if __name__ == '__main__':
     main()
+
+#/ WILL BE REMOVED /---------------------------------------------------------
+from urlparse import urlparse
+
+@app.route("/")
+@app.route("/<path:path>")
+def main(path=None):
+    if path:
+        if urlparse(path).scheme and url_exists(path):
+            if current_user.is_authenticated:
+                locator = Locator(url=path,
+                                  title=get_title(url),
+                                  groupname="",
+                                  date=datetime.today(),
+                                  username=current_user.username)
+                db.session.add(locator)
+                db.session.commit()
+                return redirect(url_for('main'))
+
+            return 
+        return redirect(url_for('main'))
+    else:
+        if current_user.is_authenticated:
+            urls = db.session.query(Locator)\
+                .filter_by(username=current_user.username).all()
+            return render_template('urls.html', urls=urls)
+        return render_template('home.html')
