@@ -49,20 +49,16 @@ def main(path=None):
         if urlparse(path).scheme and url_exists(path):
             if current_user.is_authenticated:
                 save_url(path, ''))
-                return redirect(url_for('main'))
             session['url'] = path
             return redirect(url_for('login'))
         return redirect(url_for('main'))
-    if session['url']:
-        save_url(session['url'], getattr(session, 'groupname', ''))
-        session['url'], session['groupname'] = '', ''
-        return redirect(url_for('main'))
-    else:
-        if current_user.is_authenticated:
-            urls = db.session.query(Locator)\
-                .filter_by(username=current_user.username).all()
-            return render_template('urls.html', urls=urls)
-        return render_template('home.html')
+    if current_user.is_authenticated and session['url']:
+        save_url(session['url'], session['groupname'])
+    if current_user.is_authenticated:
+        urls = db.session.query(Locator)\
+            .filter_by(username=current_user.username).all()
+        return render_template('urls.html', urls=urls)
+    return render_template('index.html')
 
 def save_url(path, groupname):
     locator = Locator(url=path, title=get_title(path),
@@ -70,4 +66,11 @@ def save_url(path, groupname):
                       username=current_user.username)
     db.session.add(locator)
     db.session.commit()
-    # return
+    if session['url']:
+        session['url'] = ''
+        session['groupname'] = ''
+    return redirect(url_for('main'))
+
+def main_func(path, groupname):
+    if path:
+        if urlparse(path).scheme and url_exist(path):

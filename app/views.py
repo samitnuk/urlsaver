@@ -15,6 +15,7 @@ lm.init_app(app)
 def get_user(user_id):
     return db.session.query(User).get(user_id)
 
+# ----------------------------------------------------------------------------
 @app.route('/')
 @app.route('/<path:path>')
 def main(path=None):
@@ -28,7 +29,7 @@ def main(path=None):
 # ----------------------------------------------------------------------------
 # Add a route to the blueprint
 @bp.route("/<path:path>")
-def home(groupname, path):
+def main2(groupname, path):
     return 'Welcome to your subdomain, {}'.format(groupname)
 
 # Register the blueprint into the application
