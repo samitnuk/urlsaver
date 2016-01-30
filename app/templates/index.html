@@ -2,20 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>login page</title>
+    <title>Home page</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
 </head>
 <body>
     <div id="overview" class="sixteen columns">
-        <h3>Log In</h3>
+        <h3>Home page</h3>
         <hr />
     </div>
     
     <div class="eight columns" id="col1">
 
         HOME PAGE ! ! !
+
+        <hr />
+        <hr />
+        {% if arg %}
+                {{ arg }}
+        {% endif %}
 
     </div><!-- col1 -->
 </body>

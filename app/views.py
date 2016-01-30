@@ -15,18 +15,51 @@ lm.init_app(app)
 def get_user(user_id):
     return db.session.query(User).get(user_id)
 
-# ----------------------------------------------------------------------------
+#/ INNER HELPERS /-----------------------------------------------------------
+from urlparse import urlparse
+from helpers import url_exists, get_title
+
+def save_url(path, groupname):
+    locator = Locator(url=path, title=get_title(path),
+                      groupname=groupname, date=datetime.today(),
+                      username=current_user.username)
+    db.session.add(locator)
+    db.session.commit()
+    if session['url']:
+        session['url'] = ''
+        session['groupname'] = ''
+    return redirect(url_for('main'))
+
+def main_func(path, groupname):
+    if path:
+        if urlparse(path).scheme and url_exists(path):
+            print
+            print "----------------"
+            print
+            if current_user.is_authenticated:
+                save_url(path, '')
+            else:
+                session['url'] = path
+                session['groupname'] = groupname
+                return redirect(url_for('login'))
+        return render_template('index.html', args="NO")
+    
+    if current_user.is_authenticated and session['url']:
+        save_url(session['url'], getattr(session, 'groupname', ''))
+    
+    if current_user.is_authenticated:
+        urls = db.session.query(Locator)\
+            .filter_by(username=current_user.username).all()
+        return render_template('urls.html', urls=urls)
+
+#----------------------------------------------------------------------------
 @app.route('/')
 @app.route('/<path:path>')
-def main(path=None):
-    if path:
-        return "<i>Path for saving: </i>" + path
-    if current_user.is_authenticated:
-        return "Hi, %s!" % current_user.username
-    else:
-        return "Welcome to this page"
+def main(path=''):
+    main_func(path, '')
+    return render_template('index.html', arg=session['url'])
 
-# ----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
 # Add a route to the blueprint
 @bp.route("/<path:path>")
 def main2(groupname, path):
@@ -35,7 +68,7 @@ def main2(groupname, path):
 # Register the blueprint into the application
 app.register_blueprint(bp)
 
-# ----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
