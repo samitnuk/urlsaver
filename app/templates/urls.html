@@ -2,20 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>login page</title>
+    <title>URLS</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
 </head>
 <body>
     <div id="overview" class="sixteen columns">
-        <h3>Log In</h3>
+        <h3>List of saved URLs for {{ current_user.username }}</h3>
         <hr />
     </div>
     
     <div class="eight columns" id="col1">
-
-        {{ urls }}
+    {% if urls %}
+        {% for locator in urls %}
+            locator.url
+            locator.title
+            locator.groupname
+            locator.date
+        {% endfor %}
+    {% endif %}
 
     </div><!-- col1 -->
 </body>

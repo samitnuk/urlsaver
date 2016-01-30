@@ -19,6 +19,11 @@ def get_user(user_id):
 from urlparse import urlparse
 from helpers import url_exists, get_title
 
+def get_urls():
+    urls = db.session.query(Locator).filter_by(username=current_user.username).all()
+    print "--------> from get_urls()"
+    return render_template('urls.html')
+
 def save_url(path, groupname):
     locator = Locator(url=path, title=get_title(path),
                       groupname=groupname, date=datetime.today(),
@@ -28,9 +33,33 @@ def save_url(path, groupname):
     if session['url']:
         session['url'] = ''
         session['groupname'] = ''
-    return redirect(url_for('main'))
+    get_urls()
 
-def main_func(path, groupname):
+# def main_func(path, groupname):
+#     if path:
+#         if urlparse(path).scheme and url_exists(path):
+#             print
+#             print "----------------"
+#             print
+#             if current_user.is_authenticated:
+#                 save_url(path, '')
+#             else:
+#                 session['url'] = path
+#                 session['groupname'] = groupname
+#                 return redirect(url_for('login'))
+#         return render_template('index.html', args="NO")
+    
+#     if current_user.is_authenticated and session['url']:
+#         save_url(session['url'], getattr(session, 'groupname', '')) # WTF???
+    
+#     if current_user.is_authenticated():
+#         get_urls()
+
+#----------------------------------------------------------------------------
+@app.route('/')
+@app.route('/<path:path>')
+def main(path='', groupname=''):
+    # main_func(path, '')
     if path:
         if urlparse(path).scheme and url_exists(path):
             print
@@ -42,25 +71,18 @@ def main_func(path, groupname):
                 session['url'] = path
                 session['groupname'] = groupname
                 return redirect(url_for('login'))
-        return render_template('index.html', args="NO")
-    
-    if current_user.is_authenticated and session['url']:
-        save_url(session['url'], getattr(session, 'groupname', ''))
+        return render_template('index.html', arg="incorrect path")
     
     if current_user.is_authenticated:
-        urls = db.session.query(Locator)\
-            .filter_by(username=current_user.username).all()
-        return render_template('urls.html', urls=urls)
-
-#----------------------------------------------------------------------------
-@app.route('/')
-@app.route('/<path:path>')
-def main(path=''):
-    main_func(path, '')
+        print "--------> from main() / if current_user.is_authenticated"
+        if session['url']:
+            save_url(session['url'], getattr(session, 'groupname', ''))
+        get_urls() 
+    
     return render_template('index.html', arg=session['url'])
 
 #----------------------------------------------------------------------------
-# Add a route to the blueprint
+# groupname - subdomain in blueprint
 @bp.route("/<path:path>")
 def main2(groupname, path):
     return 'Welcome to your subdomain, {}'.format(groupname)

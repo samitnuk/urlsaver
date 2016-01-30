@@ -11,7 +11,7 @@ def url_exists(url):
     try:
         # without User-agent from some https sites will be received 403
         r = requests.head(url, headers={'User-Agent': 'Flask'}, verify=False)
-        return r.status_code == requests.codes.ok # == 200
+        return r.status_code #== requests.codes.ok # == 200
     except ConnectionError:
         return False
 
@@ -27,14 +27,14 @@ def is_correct_path(path):
 
 #/ FOR TESTS /---------------------------------------------------------------
 def main():
-    url = 'https://fantlab.ru/autor1667'
-    # url = '//my/name'
+    #url = 'https://fantlab.ru/autor1667'
+    url = 'https://vk.com/audios13296463'
     print
-    # if url_exists(url):
-    #     print get_title(url)
-    # else:
-    #     print url_exists(url)
-    print is_correct_path(url)
+    if url_exists(url):
+        print get_title(url)
+    else:
+        print url_exists(url)
+    # print is_correct_path(url)
 
 if __name__ == '__main__':
     main()

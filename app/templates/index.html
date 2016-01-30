@@ -9,7 +9,11 @@
 </head>
 <body>
     <div id="overview" class="sixteen columns">
-        <h3>Home page</h3>
+        {% if current_user.is_authenticated %}
+            <h3>Home page / {{ current_user.username }}</h3>
+        {% else %}
+            <h3>Home page</h3>
+        {% endif %}
         <hr />
     </div>
     
@@ -20,7 +24,7 @@
         <hr />
         <hr />
         {% if arg %}
-                {{ arg }}
+            {{ arg }}
         {% endif %}
 
     </div><!-- col1 -->
