@@ -18,7 +18,7 @@ def url_exists(url):
 def get_title(url):
     r = requests.get(url, headers={'User-Agent': 'Flask'}, verify=False)
     soup = BeautifulSoup(r.text, "html.parser")
-    return soup.find('title').text
+    return soup.title.text
 
 def is_correct_path(path):
     o = urlparse(path)
@@ -27,8 +27,8 @@ def is_correct_path(path):
 
 #/ FOR TESTS /---------------------------------------------------------------
 def main():
-    #url = 'https://fantlab.ru/autor1667'
-    url = 'https://translate.google.com.ua'
+    # url = 'https://fantlab.ru/autor1667'
+    url = 'https://www.behance.net/gallery/18264987/Biotop-from-Polygonia'
     print
     if url_exists(url):
         print get_title(url)

@@ -40,7 +40,7 @@ def save_url(path, groupname):
 #----------------------------------------------------------------------------
 @app.route('/')
 @app.route('/<path:path>')
-def main(path='', groupname=''):
+def main(path='', groupname='----- 2016.02.01'):
     # main_func(path, '')
     if path:
         if urlparse(path).scheme and url_exists(path):
@@ -55,9 +55,9 @@ def main(path='', groupname=''):
         #                        arg="incorrect path: {}".format(path))
 
     if current_user.is_authenticated:
-        print "current_user.is_authenticated = True"
         if getattr(session, 'url', ''):
             save_url(session['url'], getattr(session, 'groupname', ''))
+            return render_template('urls.html', urls=get_urls())
         else:
             return render_template('urls.html', urls=get_urls())
 

@@ -17,9 +17,10 @@
     {% if urls %}
         {% for locator in urls %}
             {{ locator.url }}
-            {{ locator.title }}
-            {{ locator.groupname }}
-            {{ locator.date }}
+            <br> {{ locator.title }}
+            <br> {{ locator.groupname }}
+            <br> {{ locator.date }}
+            <hr />
         {% endfor %}
     {% endif %}
 
