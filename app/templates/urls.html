@@ -16,10 +16,10 @@
     <div class="eight columns" id="col1">
     {% if urls %}
         {% for locator in urls %}
-            locator.url
-            locator.title
-            locator.groupname
-            locator.date
+            {{ locator.url }}
+            {{ locator.title }}
+            {{ locator.groupname }}
+            {{ locator.date }}
         {% endfor %}
     {% endif %}
 

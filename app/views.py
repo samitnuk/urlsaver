@@ -20,9 +20,8 @@ from urlparse import urlparse
 from helpers import url_exists, get_title
 
 def get_urls():
-    urls = db.session.query(Locator).filter_by(username=current_user.username).all()
-    print "--------> from get_urls()"
-    return render_template('urls.html')
+    return db.session.query(Locator)\
+                            .filter_by(username=current_user.username).all()
 
 def save_url(path, groupname):
     locator = Locator(url=path, title=get_title(path),
@@ -30,30 +29,13 @@ def save_url(path, groupname):
                       username=current_user.username)
     db.session.add(locator)
     db.session.commit()
-    if session['url']:
+    if getattr(session, 'url', ''):
         session['url'] = ''
         session['groupname'] = ''
-    get_urls()
+    
+    return "URL saved to DB"
 
 # def main_func(path, groupname):
-#     if path:
-#         if urlparse(path).scheme and url_exists(path):
-#             print
-#             print "----------------"
-#             print
-#             if current_user.is_authenticated:
-#                 save_url(path, '')
-#             else:
-#                 session['url'] = path
-#                 session['groupname'] = groupname
-#                 return redirect(url_for('login'))
-#         return render_template('index.html', args="NO")
-    
-#     if current_user.is_authenticated and session['url']:
-#         save_url(session['url'], getattr(session, 'groupname', '')) # WTF???
-    
-#     if current_user.is_authenticated():
-#         get_urls()
 
 #----------------------------------------------------------------------------
 @app.route('/')
@@ -62,24 +44,24 @@ def main(path='', groupname=''):
     # main_func(path, '')
     if path:
         if urlparse(path).scheme and url_exists(path):
-            print
-            print "----------------"
-            print
             if current_user.is_authenticated:
-                save_url(path, '')
+                save_url(path, groupname)
+                return render_template('urls.html', urls=get_urls())
             else:
                 session['url'] = path
                 session['groupname'] = groupname
                 return redirect(url_for('login'))
-        return render_template('index.html', arg="incorrect path")
-    
+        # return render_template('index.html',
+        #                        arg="incorrect path: {}".format(path))
+
     if current_user.is_authenticated:
-        print "--------> from main() / if current_user.is_authenticated"
-        if session['url']:
+        print "current_user.is_authenticated = True"
+        if getattr(session, 'url', ''):
             save_url(session['url'], getattr(session, 'groupname', ''))
-        get_urls() 
-    
-    return render_template('index.html', arg=session['url'])
+        else:
+            return render_template('urls.html', urls=get_urls())
+
+    return render_template('index.html', arg=getattr(session, 'url', ''))
 
 #----------------------------------------------------------------------------
 # groupname - subdomain in blueprint
@@ -91,7 +73,7 @@ def main2(groupname, path):
 app.register_blueprint(bp)
 
 #----------------------------------------------------------------------------
-@app.route('/register/', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
@@ -105,7 +87,7 @@ def register():
     return render_template('register.html', form=form)
 
 #----------------------------------------------------------------------------
-@app.route('/login/', methods = ['GET', 'POST'])
+@app.route('/login', methods = ['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
@@ -115,7 +97,7 @@ def login():
     return render_template('login.html', form=form)
 
 #----------------------------------------------------------------------------
-@app.route('/logout/')
+@app.route('/logout')
 @login_required
 def logout():
     logout_user()
