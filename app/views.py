@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
 
 from flask import render_template, redirect, request, session, url_for
@@ -16,7 +17,7 @@ def get_user(user_id):
     return db.session.query(User).get(user_id)
 
 #/ INNER HELPERS /-----------------------------------------------------------
-from urlparse import urlparse
+# from urlparse import urlparse
 from helpers import url_exists, get_title
 
 def get_urls():
@@ -35,15 +36,13 @@ def save_url(path, groupname):
     
     return "URL saved to DB"
 
-# def main_func(path, groupname):
-
 #----------------------------------------------------------------------------
 @app.route('/')
-@app.route('/<path:path>')
-def main(path='', groupname='----- 2016.02.01'):
+@app.route('/<path:path>/')
+def main(path='', groupname=''):
     # main_func(path, '')
     if path:
-        if urlparse(path).scheme and url_exists(path):
+        if url_exists(path):
             if current_user.is_authenticated:
                 save_url(path, groupname)
                 return render_template('urls.html', urls=get_urls())
@@ -51,8 +50,6 @@ def main(path='', groupname='----- 2016.02.01'):
                 session['url'] = path
                 session['groupname'] = groupname
                 return redirect(url_for('login'))
-        # return render_template('index.html',
-        #                        arg="incorrect path: {}".format(path))
 
     if current_user.is_authenticated:
         if getattr(session, 'url', ''):
@@ -61,19 +58,29 @@ def main(path='', groupname='----- 2016.02.01'):
         else:
             return render_template('urls.html', urls=get_urls())
 
-    return render_template('index.html', arg=getattr(session, 'url', ''))
+    return render_template('index.html')
 
 #----------------------------------------------------------------------------
 # groupname - subdomain in blueprint
-@bp.route("/<path:path>")
+@bp.route("/<path:path>/")
 def main2(groupname, path):
-    return 'Welcome to your subdomain, {}'.format(groupname)
+    if path:
+        if url_exists(path):
+            if current_user.is_authenticated:
+                save_url(path, groupname)
+                return render_template('urls.html', urls=get_urls())
+            else:
+                session['url'] = path
+                session['groupname'] = groupname
+                return redirect(url_for('login'))
+
+    return redirect(url_for('main'))
 
 # Register the blueprint into the application
 app.register_blueprint(bp)
 
 #----------------------------------------------------------------------------
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register/', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
@@ -87,7 +94,7 @@ def register():
     return render_template('register.html', form=form)
 
 #----------------------------------------------------------------------------
-@app.route('/login', methods = ['GET', 'POST'])
+@app.route('/login/', methods = ['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
@@ -97,7 +104,7 @@ def login():
     return render_template('login.html', form=form)
 
 #----------------------------------------------------------------------------
-@app.route('/logout')
+@app.route('/logout/')
 @login_required
 def logout():
     logout_user()

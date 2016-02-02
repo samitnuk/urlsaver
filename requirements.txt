@@ -4,5 +4,5 @@ sqlalchemy-migrate
 flask-wtf
 flask-login
 
-requests
+# requests
 beautifulsoup4

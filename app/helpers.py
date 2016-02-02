@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 import requests
-from requests.exceptions import ConnectionError
+# from requests.exceptions import ConnectionError
 from urlparse import urlparse
 
 # without this will be received SNIMissingWarning from https sites
@@ -12,13 +13,13 @@ def url_exists(url):
         # without User-agent from some https sites will be received 403
         r = requests.head(url, headers={'User-Agent': 'Flask'}, verify=False)
         return r.status_code #== requests.codes.ok # == 200
-    except ConnectionError:
+    except:
         return False
 
 def get_title(url):
     r = requests.get(url, headers={'User-Agent': 'Flask'}, verify=False)
     soup = BeautifulSoup(r.text, "html.parser")
-    return soup.title.text
+    return unicode(soup.title.text)
 
 def is_correct_path(path):
     o = urlparse(path)
