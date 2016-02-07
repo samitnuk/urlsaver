@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 def add_scheme(url):
     if urlparse(url).scheme:
         return url
-    return urljoin("http://", url) 
+    return "http://" + url
 
 def url_exists(url):
     try:
@@ -41,7 +41,7 @@ def main():
             'https://habrahabr.ru/post/150302/',
             'http://www.loungefm.com.ua/terrace',
             'jade-lang.com/reference/includes/',
-            'www.google.com.ua',
+            'flask.pocoo.org/docs/0.10/patterns/favicon/',
             'google.com.ua']
     print
     for url in urls:    
