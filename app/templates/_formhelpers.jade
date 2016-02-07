@@ -1,0 +1,10 @@
+{% macro render_field(field) %}
+
+li 
+  | #{field(**kwargs)|safe}
+  if field.errors
+    ul.errors
+      for error in field.errors
+        li #{error}
+
+{% endmacro %}

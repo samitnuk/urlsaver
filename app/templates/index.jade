@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title Home page
+    meta(name="description", content="")
+    meta(name="author", content="")
+
+  body
+    div()
+      if current_user.is_authenticated
+        h3 Home page / #{current_user.username}
+      else
+        h3 Home page
+
+    div()
+      | Home page ! ! !
+      hr
+      hr
+      if arg
+        | arg
