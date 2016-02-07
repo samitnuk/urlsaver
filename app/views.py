@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from sqlalchemy import desc
 
 from flask import render_template, redirect, request, session, url_for
 from flask.ext.login import (LoginManager, login_user, logout_user,
@@ -18,14 +19,15 @@ def get_user(user_id):
 
 #/ INNER HELPERS /-----------------------------------------------------------
 # from urlparse import urlparse
-from helpers import url_exists, get_title
+from helpers import add_scheme, url_exists, get_title
 
 def get_urls():
     return db.session.query(Locator)\
-                            .filter_by(username=current_user.username).all()
+                            .filter_by(username=current_user.username)\
+                            .order_by(desc(Locator.id))
 
 def save_url(path, groupname):
-    locator = Locator(url=path, title=get_title(path),
+    locator = Locator(url=add_scheme(path), title=get_title(path),
                       groupname=groupname, date=datetime.today(),
                       username=current_user.username)
     db.session.add(locator)
@@ -33,8 +35,7 @@ def save_url(path, groupname):
     if getattr(session, 'url', ''):
         session['url'] = ''
         session['groupname'] = ''
-    
-    return "URL saved to DB"
+    return render_template('urls.jade', urls=get_urls())
 
 #----------------------------------------------------------------------------
 @app.route('/')
@@ -45,7 +46,7 @@ def main(path='', groupname=''):
         if url_exists(path):
             if current_user.is_authenticated:
                 save_url(path, groupname)
-                return render_template('urls.html', urls=get_urls())
+                # return render_template('urls.jade', urls=get_urls())
             else:
                 session['url'] = path
                 session['groupname'] = groupname
@@ -54,25 +55,24 @@ def main(path='', groupname=''):
     if current_user.is_authenticated:
         if getattr(session, 'url', ''):
             save_url(session['url'], getattr(session, 'groupname', ''))
-            return render_template('urls.html', urls=get_urls())
+            # return render_template('urls.jade', urls=get_urls())
         else:
-            return render_template('urls.html', urls=get_urls())
+            return render_template('urls.jade', urls=get_urls())
 
-    return render_template('index.html')
+    return render_template('index.jade')
 
 #----------------------------------------------------------------------------
 # groupname - subdomain in blueprint
 @bp.route("/<path:path>/")
 def main2(groupname, path):
-    if path:
-        if url_exists(path):
-            if current_user.is_authenticated:
-                save_url(path, groupname)
-                return render_template('urls.html', urls=get_urls())
-            else:
-                session['url'] = path
-                session['groupname'] = groupname
-                return redirect(url_for('login'))
+    if url_exists(path):
+        if current_user.is_authenticated:
+            save_url(path, groupname)
+            return render_template('urls.jade', urls=get_urls())
+        else:
+            session['url'] = path
+            session['groupname'] = groupname
+            return redirect(url_for('login'))
 
     return redirect(url_for('main'))
 
@@ -101,7 +101,7 @@ def login():
         user = form.get_user()
         login_user(user, remember=True)
         return redirect(url_for('main'))
-    return render_template('login.html', form=form)
+    return render_template('login.jade', form=form)
 
 #----------------------------------------------------------------------------
 @app.route('/logout/')

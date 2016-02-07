@@ -8,19 +8,19 @@
 
 </head>
 <body>
-    <div id="overview" class="sixteen columns">
+    <div>
         <h3>List of saved URLs for {{ current_user.username }}</h3>
-        <hr />
+        <hr>
     </div>
     
-    <div class="eight columns" id="col1">
+    <div>
     {% if urls %}
         {% for locator in urls %}
+            <hr>
             {{ locator.url }}
             <br> {{ locator.title }}
             <br> {{ locator.groupname }}
             <br> {{ locator.date }}
-            <hr />
         {% endfor %}
     {% endif %}
 
