@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Home page</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+</head>
+<body>
+    <div id="overview" class="sixteen columns">
+        {% if current_user.is_authenticated %}
+            <h3>Home page / {{ current_user.username }}</h3>
+        {% else %}
+            <h3>Home page</h3>
+        {% endif %}
+        <hr />
+    </div>
+    
+    <div class="eight columns" id="col1">
+
+        HOME PAGE ! ! !
+
+        <hr />
+        <hr />
+        {% if arg %}
+            {{ arg }}
+        {% endif %}
+
+    </div><!-- col1 -->
+</body>
+</html>
