@@ -26,7 +26,7 @@ def get_title(url):
     r = requests.get(add_scheme(url),
                      headers={'User-Agent': 'Flask'}, verify=False)
     soup = BeautifulSoup(r.text, "html.parser")
-    return unicode(soup.title.text)
+    return soup.title.text
 
 def is_correct_path(path):
     o = urlparse(path)
@@ -38,11 +38,7 @@ def main():
     urls = ['https://fantlab.ru/autor1667',
             'http://amlab.me/', # unreadable title
             'https://www.facebook.com/', # unreadable title
-            'https://habrahabr.ru/post/150302/',
-            'http://www.loungefm.com.ua/terrace',
-            'jade-lang.com/reference/includes/',
-            'flask.pocoo.org/docs/0.10/patterns/favicon/',
-            'google.com.ua']
+            'https://habrahabr.ru/post/150302/']
     print
     for url in urls:    
         if url_exists(url):

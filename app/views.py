@@ -46,7 +46,6 @@ def main(path='', groupname=''):
         if url_exists(path):
             if current_user.is_authenticated:
                 save_url(path, groupname)
-                # return render_template('urls.jade', urls=get_urls())
             else:
                 session['url'] = path
                 session['groupname'] = groupname
@@ -55,7 +54,6 @@ def main(path='', groupname=''):
     if current_user.is_authenticated:
         if getattr(session, 'url', ''):
             save_url(session['url'], getattr(session, 'groupname', ''))
-            # return render_template('urls.jade', urls=get_urls())
         else:
             return render_template('urls.jade', urls=get_urls())
 
