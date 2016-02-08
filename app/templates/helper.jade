@@ -1,0 +1,11 @@
+extends ./base.jade
+
+block title
+  title= //- ADD TITLE
+
+block top-menu
+  .top-menu
+    ul.nav.pull-right.top-menu
+      li
+        a.logout(href=url_for("logout"))
+          | Logout

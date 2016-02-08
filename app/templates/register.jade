@@ -1,0 +1,30 @@
+{% from "_formhelpers.jade" import render_field %}
+
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title URLS
+    meta(name="description", content="")
+    meta(name="author", content="")
+
+  body
+    div()
+      h3 Log In
+      hr
+
+    div()
+      form(method="post", action= url_for("register"))
+        | #{form.csrf_token}
+        ul
+          | !{render_field(form.username, placeholder="Username")}
+          | !{render_field(form.email, placeholder="Email")}
+          | !{render_field(form.password, placeholder="Password")}
+          | !{render_field(form.confirm, placeholder="Repeat Password")}
+        p 
+          input(type="submit", value="Rgister")
+
+      p Already have an account?
+        a(href=url_for("login"))
+          br
+          | Click here to log in.

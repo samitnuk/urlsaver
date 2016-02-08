@@ -1,0 +1,64 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="author", content="Dashboard")
+    meta(name="keyword", content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina")
+
+    block title
+
+    //- Bootstrap core CSS
+    link(href=url_for('static', filename="/css/bootstrap.css"), rel="stylesheet")
+    //- external css
+    link(href=url_for('static', filename="/css/font-awesom.css"), rel="stylesheet")
+    //- Custom styles for this template
+    link(href=url_for('static', filename="/css/style.css"), rel="stylesheet")
+    link(href=url_for('static', filename="/css/style-responsive.css"), rel="stylesheet")
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  body
+    section#container
+      //- TOP BAR
+      header.header.black-bg
+        .sidebar-toggle-box
+          .fa.fa-bars.tooltips(data-placement="right", data-original-title="Toggle Navigation")
+        //- LOGO
+        a.logo(href=url_for("main"))
+          b URLSAVER
+        block top-menu
+
+      //- MAIN CONTENT
+      section#main-content
+        section.wrapper.site-min-height
+          h3
+            i.fa.fa-angle-right
+              | blank Page
+            .row.mt
+              .col-lg-12
+                p
+                  | Place your content here.
+
+      //- FOOTER
+      footer.site-footer
+        .text-center
+          | 2016 - urlsaver.ua
+          a.go-top(href="#")
+            i.fa.fa-angle-up
+
+    //- js placed at the end of the document so the pages load faster
+    script(src=url_for('static', filename="/js/jquery.js")) !!!
+    script(src=url_for('static', filename="/js/bootstrap.min.js")) !!!
+    script(src=url_for('static', filename="/js/jquery-ui-1.9.2.custom.min.js"))
+    script(src=url_for('static', filename="/js/jquery.ui.touch-punch.min.js"))
+    script(src=url_for('static', filename="/js/jquery.dcjqaccordion.2.7.js"), type="text/javascript", class="include")
+    script(src=url_for('static', filename="/js/jquery.scrollTo.min.js"))
+    script(src=url_for('static', filename="/js/jquery.nicescroll.js", type="text/javascript"))
+
+    //- common scripts for all pages
+    script(src=url_for("static", "/js/common-scripts.js"))
