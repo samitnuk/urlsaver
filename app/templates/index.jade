@@ -1,21 +1,14 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="utf-8")
-    title Home page
-    meta(name="description", content="")
-    meta(name="author", content="")
+extends ./base.jade
 
-  body
-    div()
-      if current_user.is_authenticated
-        h3 Home page / #{current_user.username}
-      else
-        h3 Home page
+block title
+  title Home page
 
-    div()
-      | Home page ! ! !
-      hr
-      hr
-      if arg
-        | arg
+block topmenu
+  .top-menu
+    ul.nav.pull-right.top-menu
+      li
+        a.logout(href=url_for("login"))
+          | Login
+      li
+        a.logout(href=url_for("register"))
+          | Register
