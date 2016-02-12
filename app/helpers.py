@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 # from requests.exceptions import ConnectionError
-from urlparse import urlparse, urljoin
+from urlparse import urlparse
 
 # without this will be received SNIMissingWarning from https sites
 requests.packages.urllib3.disable_warnings()
@@ -36,9 +36,10 @@ def is_correct_path(path):
 #/ FOR TESTS /---------------------------------------------------------------
 def main():
     urls = ['https://fantlab.ru/autor1667',
-            'http://amlab.me/', # unreadable title
+            'amlab.me/', # unreadable title
             'https://www.facebook.com/', # unreadable title
-            'https://habrahabr.ru/post/150302/']
+            'habrahabr.ru/post/150302/',
+            "http://yummymommy.com.ua/post-2.html"]
     print
     for url in urls:    
         if url_exists(url):
