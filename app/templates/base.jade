@@ -1,56 +1,67 @@
 doctype html
-html(lang="en")
+html
   head
     meta(charset="utf-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(name="author", content="Dashboard")
-    meta(name="keyword", content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina")
-
+    
     block title
+    
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(name="keywords", content=" URLSAVER DESCRIPTION WILL BE HERE")
 
-    link(href=url_for('static', filename="img/favicon.png"), rel='shortcut icon')
+    script(typetype="application/x-javascript") addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
 
-    //- Bootstrap core CSS
-    link(href=url_for('static', filename="css/bootstrap.css"), rel="stylesheet")
-    //- external css
-    link(href=url_for('static', filename="css/font-awesome.css"), rel="stylesheet")
-    //- Custom styles for this template
-    link(href=url_for('static', filename="css/style.css"), rel="stylesheet")
-    link(href=url_for('static', filename="css/style-responsive.css"), rel="stylesheet")
+    link(href=url_for("static", filename="css/bootstrap.min.css"), rel="stylesheet", type="text/css")
+
+    link(href=url_for("static", filename="css/style.css"), rel="stylesheet", type="text/css")
+    link(href=url_for("static", filename="css/font-awesome.css"), rel="stylesheet")
+    script(src=url_for("static", filename="js/jquery.min.js"))
+    script(src=url_for("static", filename="js/bootstrap.min.js"))
+
+    script(src=url_for("static", filename="js/jquery.metisMenu.js"))
+    script(src=url_for("static", filename="js/jquery.slimscroll.min.js"))
+
+    link(href=url_for("static", filename="css/custom.css"), rel="stylesheet")
+    script(src=url_for("static", filename="js/custom.js"))
 
   body
-    section#container
-      //- TOP BAR
-      header.header.black-bg
-        .sidebar-toggle-box
-          .fa.fa-bars.tooltips(data-placement="right", data-original-title="Toggle Navigation")
-        //- LOGO
-        a.logo(href=url_for('main'))
-          b URLSAVER
-        
-        block topmenu
+    #wrapper
+      nav.navbar-default.navbar-static-top(role="navigation")
+        .navbar-header
+          button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          h1
+            a.navbar-brand(href=url_for("main")) Minimal
+        .border-bottom
+          .full-left
+            form.navbar-left-right
+              input(type="text", value="Search...", onfocus="this.value = '';", onblur="if (this.value == '') {this.value = 'Search...';}")
+              input.fa.fa-search(type="submit", value="")
+            .clearfix
+        .drop-men
+          ul.nav_1
 
-      block maincontent
+        .clearfix
 
-      //- FOOTER
-      footer.site-footer
-        .text-center 2016 - urlsaver.ua
-          a.go-top(href="#") 
-            i.fa.fa-angle-up
+      #page-wrapper.gray-bg.dashboard-1
+        .content-main
+          .banner
+            h2
+              a(href="index.html") Home
+              i.fa.fa-angle-right
+              span home page
+          .blank
+            .blank-page
+              p.
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+          .copy
+            p &copy; 2016 URLsaver.ua. All Rights Reserved | Used template Design by
+              a(href="http://w3layouts.com/", target="_blank") W3layouts
 
-    //- js placed at the end of the document so the pages load faster
-    script(src=url_for('static', filename="js/jquery.js"))
-    script(src=url_for('static', filename="js/bootstrap.min.js"))
-    script(src=url_for('static', filename="js/jquery-ui-1.9.2.custom.min.js"))
-    script(src=url_for('static', filename="js/jquery.ui.touch-punch.min.js"))
-    script(src=url_for('static', filename="js/jquery.dcjqaccordion.2.7.js"), type="text/javascript", class="include")
-    script(src=url_for('static', filename="js/jquery.scrollTo.min.js"))
-    script(src=url_for('static', filename="js/jquery.nicescroll.js"), type="text/javascript"))
+      .clearfix
 
-    //- common scripts for all pages
-    script(src=url_for("static", filename="js/common-scripts.js"))
-
-    script.
-      $(function()){
-          $('select.styled').customSelect();
-      }
+    //- scrolling js
+    //- script(src=url_for("static", filename="js/jquery.nicescroll.js"))
+    //- script(src=url_for("static", filename="js/scripts.js"))
