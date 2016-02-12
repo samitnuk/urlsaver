@@ -12,7 +12,7 @@ So this app should work next way:
 * if you add "urlsaver.ua" before any path in browser, it will save path (for example: "urlsaver.ua/https://translate.google.com.ua" save path https://translate.google.com.ua).
 * if you add "groupname.urlsaver.ua" before any path in browser, it will save path and add it to group "groupname" - so subdomain will mean group for path (for example: "translator.urlsaver.ua/https://translate.google.com.ua" save path https://translate.google.com.ua to group "translator").
 
-As a templates for this projest I will try to use some elements from very nice [DashGum](http://blacktie.co/2014/07/dashgum-free-dashboard/) admin panel.
+As a templates for this projest I will try to use some elements from very nice [Minimal](https://w3layouts.com/minimal-admin-panel-flat-bootstrap-responsive-web-template/) admin panel.
 
 ---
 
