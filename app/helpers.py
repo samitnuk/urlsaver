@@ -27,12 +27,7 @@ def get_title(url):
                      headers={'User-Agent': 'Flask'}, verify=False)
     r.encoding = "utf-8"
     soup = BeautifulSoup(r.text, "html.parser")
-    return soup.title.text #encode('raw-unicode-escape')
-
-def is_correct_path(path):
-    o = urlparse(path)
-    return o.scheme, o.netloc
-
+    return soup.title.text
 
 #/ FOR TESTS /---------------------------------------------------------------
 def main():
@@ -50,7 +45,6 @@ def main():
             print get_title(url)
         else:
             print url_exists(url)
-    # print is_correct_path(url)
 
 if __name__ == '__main__':
     main()
