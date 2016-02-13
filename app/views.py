@@ -92,6 +92,20 @@ def register():
     return render_template('register.html', form=form)
 
 #----------------------------------------------------------------------------
+@app.route('/restore_password/', methods=['GET', 'POST'])
+def restore_password():
+    # form = RegistrationForm(request.form)
+    # if request.method == 'POST' and form.validate_on_submit():
+    #     user = User(username=form.username.data,
+    #                 email=form.email.data,
+    #                 password=form.password.data)
+    #     db.session.add(user)
+    #     db.session.commit()
+    #     login_user(user, remember=True)
+    #     return redirect(url_for('main'))
+    return render_template('restore_password.jade', form=form)
+
+#----------------------------------------------------------------------------
 @app.route('/login/', methods = ['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
@@ -99,7 +113,7 @@ def login():
         user = form.get_user()
         login_user(user, remember=True)
         return redirect(url_for('main'))
-    return render_template('login.jade', form=form)
+    return render_template('_login.jade', form=form)
 
 #----------------------------------------------------------------------------
 @app.route('/logout/')
