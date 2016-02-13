@@ -6,23 +6,21 @@ html
     block title
     
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    meta(name="keywords", content=" URLSAVER DESCRIPTION WILL BE HERE")
+    meta(name="keywords", content="URLSAVER DESCRIPTION WILL BE HERE")
+    link(rel="shortcut icon", href=url_for("static", filename="/img/favicon.png"))
 
     script(typetype="application/x-javascript") addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
 
+    //- General styles and scripts
     link(href=url_for("static", filename="css/bootstrap.min.css"), rel="stylesheet", type="text/css")
-
     link(href=url_for("static", filename="css/style.css"), rel="stylesheet", type="text/css")
     link(href=url_for("static", filename="css/font-awesome.css"), rel="stylesheet")
     script(src=url_for("static", filename="js/jquery.min.js"))
     script(src=url_for("static", filename="js/bootstrap.min.js"))
 
-    script(src=url_for("static", filename="js/jquery.metisMenu.js"))
-    script(src=url_for("static", filename="js/jquery.slimscroll.min.js"))
-
-    link(href=url_for("static", filename="css/custom.css"), rel="stylesheet")
-    script(src=url_for("static", filename="js/custom.js"))
-
+    //- Additional styles and scripts for each page
+    block scripts
+    
   body
     #wrapper
       nav.navbar-default.navbar-static-top(role="navigation")
@@ -33,7 +31,7 @@ html
             span.icon-bar
             span.icon-bar
           h1
-            a.navbar-brand(href=url_for("main")) Minimal
+            a.navbar-brand(href=url_for("main")) urlsaver
         .border-bottom
           .full-left
             form.navbar-left-right
@@ -57,11 +55,11 @@ html
               p.
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
           .copy
-            p &copy; 2016 URLsaver.ua. All Rights Reserved | Used template Design by
+            p &copy; 2016 URLsaver.ua. All Rights Reserved | Used template designed by
               a(href="http://w3layouts.com/", target="_blank") W3layouts
 
       .clearfix
 
     //- scrolling js
-    //- script(src=url_for("static", filename="js/jquery.nicescroll.js"))
-    //- script(src=url_for("static", filename="js/scripts.js"))
+    script(src=url_for("static", filename="js/jquery.nicescroll.js"))
+    script(src=url_for("static", filename="js/scripts.js"))
