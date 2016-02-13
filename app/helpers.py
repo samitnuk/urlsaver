@@ -25,8 +25,9 @@ def url_exists(url):
 def get_title(url):
     r = requests.get(add_scheme(url),
                      headers={'User-Agent': 'Flask'}, verify=False)
+    r.encoding = "utf-8"
     soup = BeautifulSoup(r.text, "html.parser")
-    return soup.title.text
+    return soup.title.text #encode('raw-unicode-escape')
 
 def is_correct_path(path):
     o = urlparse(path)
@@ -36,10 +37,13 @@ def is_correct_path(path):
 #/ FOR TESTS /---------------------------------------------------------------
 def main():
     urls = ['https://fantlab.ru/autor1667',
-            'amlab.me/', # unreadable title
-            'https://www.facebook.com/', # unreadable title
+            'amlab.me/',
+            'https://www.facebook.com/',
             'habrahabr.ru/post/150302/',
-            "http://yummymommy.com.ua/post-2.html"]
+            "http://yummymommy.com.ua/post-2.html",
+            "http://www.uz.gov.ua/",
+            "sputniktv.in.ua/112-ukrana.html",
+            "http://sweden.mfa.gov.ua/ua"]
     print
     for url in urls:    
         if url_exists(url):
