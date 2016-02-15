@@ -89,7 +89,7 @@ def register():
         db.session.commit()
         login_user(user, remember=True)
         return redirect(url_for('main'))
-    return render_template('register.html', form=form)
+    return render_template('register.jade', form=form)
 
 #----------------------------------------------------------------------------
 @app.route('/restore_password/', methods=['GET', 'POST'])
@@ -113,7 +113,7 @@ def login():
         user = form.get_user()
         login_user(user, remember=True)
         return redirect(url_for('main'))
-    return render_template('_login.jade', form=form)
+    return render_template('login.jade', form=form)
 
 #----------------------------------------------------------------------------
 @app.route('/logout/')

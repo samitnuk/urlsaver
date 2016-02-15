@@ -14,10 +14,10 @@ class LoginForm(Form):
         user = self.get_user()
 
         if user is None:
-            raise validators.ValidationError('Invalid user')
+            raise validators.ValidationError('Invalid user.')
 
         if not user.check_password(password=self.password.data):
-            raise validators.ValidationError('Invalid password')
+            raise validators.ValidationError('Invalid password.')
 
     def get_user(self):
         return db.session.query(User)\
@@ -31,9 +31,9 @@ class RegistrationForm(Form):
     confirm = PasswordField('Repeat Password',
                             [validators.Required(), 
                              validators.EqualTo('password',
-                             message='Passwords must match')])
+                             message='Passwords must match.')])
 
     def validate_username(self, field):
         if db.session.query(User)\
             .filter_by(username=self.username.data).count() > 0:
-            raise validators.ValidationError('Duplicate username')
+            raise validators.ValidationError('Duplicate username.')
