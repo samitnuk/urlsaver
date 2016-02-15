@@ -18,6 +18,9 @@ html
     script(src=url_for("static", filename="js/jquery.min.js"))
     script(src=url_for("static", filename="js/bootstrap.min.js"))
 
+    //- my styles
+    link(href=url_for("static", filename="css/mystyle.css"), rel="stylesheet", type="text/css")
+
     //- Additional styles and scripts for each page
     block scripts
     
@@ -38,8 +41,12 @@ html
               input(type="text", value="Search...", onfocus="this.value = '';", onblur="if (this.value == '') {this.value = 'Search...';}")
               input.fa.fa-search(type="submit", value="")
             .clearfix
-        .drop-men
-          ul.nav_1
+        .my-button-right
+          a(href=url_for('login'))
+            button(type="button") Login
+          a(href=url_for('register'))
+            button(type="button") Register
+
 
         .clearfix
 
@@ -55,11 +62,7 @@ html
               p.
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
           .copy
-            p &copy; 2016 URLsaver.ua. All Rights Reserved | Used template designed by
+            p &copy; 2016 urlsaver.ua | used template designed by 
               a(href="http://w3layouts.com/", target="_blank") W3layouts
 
       .clearfix
-
-    //- scrolling js
-    script(src=url_for("static", filename="js/jquery.nicescroll.js"))
-    script(src=url_for("static", filename="js/scripts.js"))
