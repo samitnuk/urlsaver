@@ -41,11 +41,8 @@ html
               input(type="text", value="Search...", onfocus="this.value = '';", onblur="if (this.value == '') {this.value = 'Search...';}")
               input.fa.fa-search(type="submit", value="")
             .clearfix
-        .my-button-right
-          a(href=url_for('login'))
-            button(type="button") Login
-          a(href=url_for('register'))
-            button(type="button") Register
+        
+        block buttons
 
 
         .clearfix
@@ -54,13 +51,12 @@ html
         .content-main
           .banner
             h2
-              a(href="index.html") Home
+              a(href="index.html") urlsaver
               i.fa.fa-angle-right
-              span home page
-          .blank
-            .blank-page
-              p.
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+              block currentpage
+          
+          block content
+          
           .copy
             p &copy; 2016 urlsaver.ua | used template designed by 
               a(href="http://w3layouts.com/", target="_blank") W3layouts

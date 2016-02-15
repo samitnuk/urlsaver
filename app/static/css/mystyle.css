@@ -4,7 +4,7 @@
     margin-top: 1.3em;
 }
 
-.my-button-right>a{
+.my-button-right>a {
     text-decoration: none;
 }
 
@@ -21,7 +21,7 @@
 
 /* for login, registration and password restore pages */
 
-.login-mail strong{
+.login-mail strong {
   color: #D95459;
   font-size: 12px;
 }
@@ -33,6 +33,13 @@ h6 a.forget-password {
 }
 
 /* ---------------------------------------------- */
+.my-col-md-12 {
+  position: relative;
+  min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
 @media(max-width:768px){
   .full-left {
     padding: 0 0 19px 0; 

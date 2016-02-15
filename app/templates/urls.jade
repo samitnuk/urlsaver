@@ -1,24 +1,40 @@
-doctype html
-html(lang="en")
-  
-  head
-    meta(charset="utf-8")
-    title URLS
-    meta(name="description", content="")
-    meta(name="author", content="")
-    link(rel="shortcut icon", href=url_for('static', filename='img/favicon.png'))
+extends ./base.jade
 
-  body
-    div()
-      h3 List of saved URLs for #{current_user.username}
-      hr
+block title
+  title List of saved URLs
 
-    div()
-      if urls
-        for locator in urls
-          ul
-            li 
-              a(href=locator.url) #{locator.title}
-            li #{locator.groupname}
-            li #{locator.date}
-          hr
+block scripts
+  script(src=url_for("static", filename="js/jquery.metisMenu.js"))
+  script(src=url_for("static", filename="js/jquery.slimscroll.min.js"))
+
+  link(href=url_for("static", filename="css/custom.css"), rel="stylesheet")
+  script(src=url_for("static", filename="js/custom.js"))
+
+block buttons
+  .my-button-right
+    a(href=url_for('logout'))
+      button(type="button") Logout
+
+block currentpage
+  span list of saved URLs
+
+block content
+  .blank
+    .blank-page
+      .my-col-md-12
+        table.table.table-hover
+          thead
+            tr
+              th #
+              th Title
+              th Date
+
+          tbody
+            for url in urls 
+              tr
+                td
+                  img(src="http://www.google.com/s2/favicons?domain=#{url.url}")
+                td
+                  p
+                    a(href='#{url.url}') #{url.title}
+                td #{url.date}
