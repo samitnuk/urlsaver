@@ -10,19 +10,19 @@ ul, ol {margin: 0;padding: 0;}
 p {margin: 0;}
 
 html, body{
-  	font-family:'Montserrat-Regular';
+  	font-family:'Ubuntu';
     font-size: 100%;
   	background:#F3F3F4;
   	overflow-x: hidden;
 }
-@font-face{
+/*@font-face{
 	font-family:'Montserrat-Regular';
 	src:url(../fonts/Montserrat-Regular.ttf) format('truetype');
 }
 @font-face{
 	font-family: 'Muli-Regular';
 	src:url(../fonts/Muli-Regular.ttf) format('truetype');
-}
+}*/
 body a{
 	transition:0.5s all;
 	-webkit-transition:0.5s all;
@@ -222,7 +222,7 @@ h1 a.navbar-brand {
     padding: 20px 0px;
     background: #d95459;
     text-align: center;
-	width:248px;
+	width:250px;
 	height: 60px;
 	
 }
@@ -359,33 +359,28 @@ a.dropdown-toggle.dropdown-at {
 .navbar-left-right{
 	float: left;
 	margin-left: 6%;
+  display: block;
 }
 .border-bottom {
     background-color: #fff;
 }
-.full-left {
+/*.full-left {
     float: left;
     width: 40%;
     margin-left: 3%;
    margin-top: 1.3em;
-}
+}*/
 .full-left button{
-    background: none;
-    border: none;
-    outline: none;
-        color: #B3AEAE;
-    font-size: 0.9em;
+  background: none;
+  border: none;
+  outline: none;
+  color: #B3AEAE;
+  font-size: 0.9em;
 }
 nav.navbar.navbar-static-top {
     float: right;
 }
-.navbar-left-right input[type="text"]{
-	background: none;
-	border: none;
-	outline: none;
-	color:#B3AEAE;
-	font-size: 0.9em;	
-}
+
 .navbar-left-right input[type="submit"]{
 	background: url(../img/search.png) 0px 2px no-repeat;
 	width:16px;
@@ -2197,13 +2192,19 @@ canvas#polarArea, canvas#radar, canvas#doughnut {
 @media(max-width:870px){
 .full-left {
     width: 31%;
-    padding: 0 0 19px 0; /* ______ */
+    /* padding: 0 0 19px 0; /* ______ */ /* wass */
 }
 }
-@media(max-width:768px){
+
+
+/*.navbar-left-right input[type="text"] { /* wass */
+    width: 82%;
+}
+.navbar-left-right { /* wass */
+    width: 85%;
 .content-top-1 {
     padding: 1.5em 2em;
-}
+}*/
 .top-content {
     width: 63%;
     float: left;
@@ -2473,7 +2474,11 @@ label.hor-form{
 .full-left {
     width: 49%;
 }
-
+.navbar-left-right input[type="text"] { /* wass */
+    width: 82%;
+}
+.navbar-left-right { /* wass */
+    width: 85%;
 .hvr-bounce-to-right:before {
     right: 91%;
 }
@@ -2567,6 +2572,11 @@ div#home {
 .modal-dialog {
     width: 320px;
 }
+.navbar-left-right input[type="text"] {
+    width: 82%;
+}
+.navbar-left-right {
+    width: 85%;
 }
 @media(max-width:414px){
 .full-left {

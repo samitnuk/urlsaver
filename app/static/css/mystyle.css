@@ -1,0 +1,66 @@
+.my-button-right {
+    float: right;
+    margin-right: 16px;
+    margin-top: 1.3em;
+}
+
+.my-button-right>a{
+    text-decoration: none;
+}
+
+.my-button-right>a>button {
+    color: white;
+    background-color: #1ABC9C;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    font-size: 0.8em;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+/* for login, registration and password restore pages */
+
+.login-mail strong{
+  color: #D95459;
+  font-size: 12px;
+}
+
+h6 a.forget-password {
+  color: #999;
+  text-decoration: none;
+  padding-left: 5px;
+}
+
+/* ---------------------------------------------- */
+@media(max-width:768px){
+  .full-left {
+    padding: 0 0 19px 0; 
+  }
+
+h1 a.navbar-brand {
+    width: 152px;
+  }
+}
+
+.full-left {
+  float: left;
+  width: 40%;
+  margin-left: 1em;
+  margin-top: 1.3em;
+}
+
+.navbar-left-right {
+    width: 85%;
+}
+.content-top-1 {
+    padding: 1.5em 2em;
+}
+.navbar-left-right input[type="text"]{
+  background: none;
+  border: none;
+  outline: none;
+  color:#B3AEAE;
+  font-size: 0.9em;
+  width: 70%; 
+}
