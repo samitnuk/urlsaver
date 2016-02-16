@@ -38,13 +38,15 @@ def main():
             "http://yummymommy.com.ua/post-2.html",
             "http://www.uz.gov.ua/",
             "sputniktv.in.ua/112-ukrana.html",
-            "http://sweden.mfa.gov.ua/ua"]
+            "http://sweden.mfa.gov.ua/ua",
+            "https://www.youtube.com/watch?v=E2ljhdV30JA"]
     print
     for url in urls:    
         if url_exists(url):
-            print get_title(url)
+            print '-->', get_title(url)
         else:
             print url_exists(url)
+    print
 
 if __name__ == '__main__':
     main()
