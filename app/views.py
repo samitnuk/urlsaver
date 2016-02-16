@@ -38,12 +38,14 @@ def save_url(path, groupname):
     return render_template('urls.jade', urls=get_urls())
 
 #----------------------------------------------------------------------------
-@app.route('/')
+@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>/')
 def main(path='', groupname=''):
     # main_func(path, '')
     if path:
         if url_exists(path):
+            if request.query_string:
+                path = path + '/?' + request.query_string
             if current_user.is_authenticated:
                 save_url(path, groupname)
             else:
@@ -64,6 +66,8 @@ def main(path='', groupname=''):
 @bp.route("/<path:path>/")
 def main2(groupname, path):
     if url_exists(path):
+        if request.query_string:
+                path = path + '/?' + request.query_string
         if current_user.is_authenticated:
             save_url(path, groupname)
             return render_template('urls.jade', urls=get_urls())
