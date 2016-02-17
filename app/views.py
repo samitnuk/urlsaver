@@ -26,6 +26,10 @@ def get_urls():
                             .filter_by(username=current_user.username)\
                             .order_by(desc(Locator.id))
 
+def get_groupnames():
+    return [x[0] for x in list(set(db.session.query(Locator.groupname)))]
+
+
 def save_url(path, groupname):
     locator = Locator(url=add_scheme(path), title=get_title(path),
                       groupname=groupname, date=datetime.today(),
@@ -35,7 +39,8 @@ def save_url(path, groupname):
     if getattr(session, 'url', ''):
         session['url'] = ''
         session['groupname'] = ''
-    return render_template('urls.jade', urls=get_urls())
+    return render_template('urls.jade', urls=get_urls(),
+                                        groupnames=get_groupnames())
 
 #----------------------------------------------------------------------------
 @app.route('/', defaults={'path': ''})
@@ -57,7 +62,8 @@ def main(path='', groupname=''):
         if getattr(session, 'url', ''):
             save_url(session['url'], getattr(session, 'groupname', ''))
         else:
-            return render_template('urls.jade', urls=get_urls())
+            return render_template('urls.jade', urls=get_urls(),
+                                                groupnames=get_groupnames())
 
     return render_template('index.jade')
 
@@ -70,7 +76,8 @@ def main2(groupname, path):
                 path = path + '/?' + request.query_string
         if current_user.is_authenticated:
             save_url(path, groupname)
-            return render_template('urls.jade', urls=get_urls())
+            return render_template('urls.jade', urls=get_urls(),
+                                                groupnames=get_groupnames())
         else:
             session['url'] = path
             session['groupname'] = groupname
