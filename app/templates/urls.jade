@@ -38,3 +38,10 @@ block content
                   p
                     a(href='#{url.url}') #{url.title}
                 td #{url.date}
+
+  .blank
+    .blank-page
+      .my-col-md-12
+        ul
+          for groupname in groupnames
+            li #{groupname}
