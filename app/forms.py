@@ -37,3 +37,9 @@ class RegistrationForm(Form):
         if db.session.query(User)\
             .filter_by(username=self.username.data).count() > 0:
             raise validators.ValidationError('Duplicate username.')
+
+#----------------------------------------------------------------------------
+class EditForm(Form):
+    title = TextField('title', [validators.Required()])
+    url = TextField('url', [validators.Required()])
+    groupname = TextField('groupname')
