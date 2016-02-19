@@ -143,17 +143,18 @@ def urls_by_group(groupname):
                                         groupnames=get_groupnames())
 
 #----------------------------------------------------------------------------
-@app.route('/edit/<int:id>/')
+@app.route('/edit/<int:id>/', methods = ['GET', 'POST'])
 @login_required
 def edit_url(id):
     form = EditForm(request.form)
+    url_row = db.session.query(Locator).filter_by(id=id).first()
     if request.method == 'POST' and form.validate_on_submit():
-        url_row = db.session.query(Locator).filter_by(id=id).first()
-        url_row.title = form.title
-        url_row.url = form.url
-        url_row.groupname = form.groupname
+        url_row.title = form.title.data
+        url_row.url = form.url.data
+        url_row.groupname = form.groupname.data
         db.session.commit()
-    return redirect(url_for('main'))
+        return redirect(url_for('main'))
+    return render_template('edit.jade', form=form, url=url_row)    
 
 #----------------------------------------------------------------------------
 @app.route('/delete/<int:id>/')

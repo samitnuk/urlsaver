@@ -32,7 +32,7 @@ block navigation
             if groupname != ''
               a(href=url_for('urls_by_group', groupname=groupname)).hvr-bounce-to-right
                 i.fa.fa-indent.nav_icon
-                span.nav-label #{groupname}
+                span.nav-label - #{groupname}
 
 block currentpage
   span list of saved URLs
@@ -44,7 +44,7 @@ block content
         table.table.table-hover
           thead
             tr
-              th #
+              th 
               th Title
               th Date
               th
@@ -59,5 +59,5 @@ block content
                     a(href='#{url.url}') #{url.title}
                 td #{url.date}
                 td
-                  a(href=url_for('edit_url', id=url.id)) edit 
+                  a(href=url_for('edit_url', id=url.id)) edit / 
                   a(href=url_for('delete_url', id=url.id)) delete 
