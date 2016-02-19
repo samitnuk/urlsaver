@@ -15,6 +15,25 @@ block buttons
     a(href=url_for('logout'))
       button(type="button") Logout
 
+block navigation
+  .navbar-default.sidebar(role="navigation")
+    .sidebar-nav.navbar-collapse
+      ul#side-menu.nav
+        li
+          a(href=url_for('main')).hvr-bounce-to-right
+            i.fa.fa-list.nav_icon
+            span.nav-label All links
+        li
+          a(href=url_for('urls_by_group', groupname='ungrouped')).hvr-bounce-to-right
+            i.fa.fa-indent.nav_icon
+            span.nav-label Ungrouped links
+        for groupname in groupnames
+          li
+            if groupname != ''
+              a(href=url_for('urls_by_group', groupname=groupname)).hvr-bounce-to-right
+                i.fa.fa-indent.nav_icon
+                span.nav-label #{groupname}
+
 block currentpage
   span list of saved URLs
 
@@ -28,6 +47,7 @@ block content
               th #
               th Title
               th Date
+              th
 
           tbody
             for url in urls 
@@ -38,10 +58,6 @@ block content
                   p
                     a(href='#{url.url}') #{url.title}
                 td #{url.date}
-
-  .blank
-    .blank-page
-      .my-col-md-12
-        ul
-          for groupname in groupnames
-            li #{groupname}
+                td
+                  a(href=url_for('edit_url', id=url.id)) edit 
+                  a(href=url_for('delete_url', id=url.id)) delete 
