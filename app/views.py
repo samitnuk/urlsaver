@@ -8,7 +8,7 @@ from flask.ext.login import (LoginManager, login_user, logout_user,
 
 from app import app, bp, db
 from models import User, Locator
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, EditForm
 
 lm = LoginManager()
 lm.init_app(app)
@@ -39,33 +39,33 @@ def save_url(path, groupname):
     if getattr(session, 'url', ''):
         session['url'] = ''
         session['groupname'] = ''
-    return render_template('urls.jade', urls=get_urls(),
-                                        groupnames=get_groupnames())
+    return redirect(url_for('main'))
 
 #----------------------------------------------------------------------------
-@app.route('/', defaults={'path': ''})
+@app.route('/')
+def main():
+    if current_user.is_authenticated:
+        if getattr(session, 'url', ''):
+            save_url(session['url'], getattr(session, 'groupname', ''))
+        return render_template('urls.jade', urls=get_urls(),
+                                            groupnames=get_groupnames())
+    return render_template('index.jade')
+
 @app.route('/<path:path>/')
-def main(path='', groupname=''):
+def main1(path):
     # main_func(path, '')
     if path:
         if url_exists(path):
             if request.query_string:
                 path = path + '/?' + request.query_string
             if current_user.is_authenticated:
-                save_url(path, groupname)
+                save_url(path, groupname='')
             else:
                 session['url'] = path
-                session['groupname'] = groupname
+                session['groupname'] = ''
                 return redirect(url_for('login'))
 
-    if current_user.is_authenticated:
-        if getattr(session, 'url', ''):
-            save_url(session['url'], getattr(session, 'groupname', ''))
-        else:
-            return render_template('urls.jade', urls=get_urls(),
-                                                groupnames=get_groupnames())
-
-    return render_template('index.jade')
+    return redirect(url_for('main'))
 
 #----------------------------------------------------------------------------
 # groupname - subdomain in blueprint
@@ -73,11 +73,9 @@ def main(path='', groupname=''):
 def main2(groupname, path):
     if url_exists(path):
         if request.query_string:
-                path = path + '/?' + request.query_string
+            path = path + '/?' + request.query_string
         if current_user.is_authenticated:
             save_url(path, groupname)
-            return render_template('urls.jade', urls=get_urls(),
-                                                groupnames=get_groupnames())
         else:
             session['url'] = path
             session['groupname'] = groupname
@@ -114,7 +112,7 @@ def restore_password():
     #     db.session.commit()
     #     login_user(user, remember=True)
     #     return redirect(url_for('main'))
-    return render_template('restore_password.jade', form=form)
+    return redirect(url_for('main'))
 
 #----------------------------------------------------------------------------
 @app.route('/login/', methods = ['GET', 'POST'])
@@ -131,6 +129,38 @@ def login():
 @login_required
 def logout():
     logout_user()
+    return redirect(url_for('main'))
+
+#----------------------------------------------------------------------------
+@app.route('/groupname/<groupname>')
+@login_required
+def urls_by_group(groupname):
+    if groupname == 'ungrouped':
+        groupname = ''
+    urls = db.session.query(Locator).filter_by(groupname=groupname)\
+                                    .order_by(desc(Locator.id))
+    return render_template('urls.jade', urls=urls, 
+                                        groupnames=get_groupnames())
+
+#----------------------------------------------------------------------------
+@app.route('/edit/<int:id>/')
+@login_required
+def edit_url(id):
+    form = EditForm(request.form)
+    if request.method == 'POST' and form.validate_on_submit():
+        url_row = db.session.query(Locator).filter_by(id=id).first()
+        url_row.title = form.title
+        url_row.url = form.url
+        url_row.groupname = form.groupname
+        db.session.commit()
+    return redirect(url_for('main'))
+
+#----------------------------------------------------------------------------
+@app.route('/delete/<int:id>/')
+@login_required
+def delete_url(id):
+    db.session.query(Locator).filter_by(id=id).delete()
+    db.session.commit()
     return redirect(url_for('main'))
 
 #----------------------------------------------------------------------------
