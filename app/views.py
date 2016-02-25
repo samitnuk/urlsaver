@@ -18,6 +18,7 @@ def get_user(user_id):
     return db.session.query(User).get(user_id)
 
 #/ INNER HELPERS /-----------------------------------------------------------
+
 # from urlparse import urlparse
 from helpers import add_scheme, url_exists, get_title
 
@@ -41,7 +42,7 @@ def save_url(path, groupname):
         session['groupname'] = ''
     return redirect(url_for('main'))
 
-#----------------------------------------------------------------------------
+#/ ROUTES /------------------------------------------------------------------
 @app.route('/')
 def main():
     if current_user.is_authenticated:
@@ -51,6 +52,7 @@ def main():
                                             groupnames=get_groupnames())
     return render_template('index.jade')
 
+#----------------------------------------------------------------------------
 @app.route('/<path:path>/')
 def main1(path):
     # main_func(path, '')
