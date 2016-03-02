@@ -1,0 +1,52 @@
+{% from "_formhelpers.jade" import render_field %}
+
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    
+    block title
+    
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(name="keywords", content="URLSAVER DESCRIPTION WILL BE HERE")
+    link(rel="shortcut icon", href=url_for("static", filename="/img/favicon.png"))
+
+    script(typetype="application/x-javascript") addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+    //- General styles and scripts
+    link(href=url_for("static", filename="css/bootstrap.min.css"), rel="stylesheet")
+    link(href=url_for("static", filename="css/style.css"), rel="stylesheet")
+    link(href=url_for("static", filename="css/font-awesome.css"), rel="stylesheet")
+    script(src=url_for("static", filename="js/jquery.min.js"))
+    script(src=url_for("static", filename="js/bootstrap.min.js"))
+
+    //- my styles
+    link(href=url_for("static", filename="css/mystyle.css"), rel="stylesheet", type="text/css")
+
+    //- Additional styles and scripts for each page
+    block scripts
+    
+  body
+    .login
+      h1: a(href=url_for("main")) urlsaver
+      .login-bottom
+        h2 Register
+        form(method="post", action= url_for("register"))
+          | #{form.csrf_token}
+          .col-md-6
+            .login-mail !{render_field(form.username, placeholder="Username")}
+            .login-mail !{render_field(form.email, placeholder="Email")}
+            .login-mail !{render_field(form.password, placeholder="Password")}
+            .login-mail !{render_field(form.confirm, placeholder="Confirm Password")}
+
+          .col-md-6.login-do
+            label.hvr-shutter-in-horizontal.login-sub
+              input(type="submit", value="Register")
+            p Already have an account?
+            a.hvr-shutter-in-horizontal(href=url_for("login")) Login
+
+          .clearfix
+
+    .copy-right
+      p &copy; 2016 URLsaver.ua. All Rights Reserved | Used template designed by 
+        a(href="http://w3layouts.com/", target="_blank") W3layouts

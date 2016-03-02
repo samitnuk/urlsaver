@@ -1,0 +1,104 @@
+@import url(https://fonts.googleapis.com/css?family=Comfortaa&subset=latin,cyrillic)
+
+$button_height: 25px
+$main_color: teal
+$main_color2: #888
+
+html
+  font-size: 62.5%
+
+body
+  font-size: 1.2em // currently ems cause chrome bug misinterpreting rems on body element
+  line-height: 1.5
+  font-weight: 400
+  font-family: "Comfortaa", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif
+  color: $main_color2
+
+a
+  text-decoration: none
+  color: $main_color
+
+  &:hover
+    color: $main_color2
+
+.container
+  max-width: 860px
+  min-height: 100vh
+  margin: 0 auto
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  // background-color: pink
+
+header
+  height: 40px
+  display: flex
+  justify-content: space-between
+
+.search
+  margin-top: 18px
+  margin-right: 5px
+
+.logo
+  padding: 5px
+  padding-top: 10px
+  width: 100px
+  background: $main_color
+  text-align: center
+
+  a,
+  a:hover
+    border: none
+    color: white
+    background: $main_color
+    font-size: 1.5rem
+
+
+.groups
+  margin-top: 25px
+  padding: 5px
+
+.central-block
+  width: 50%
+  margin: 0 auto
+
+.main
+  min-height: 50%
+  margin: 25px 0
+
+footer
+  display: flex
+  justify-content: space-between
+  font-size: 1.2rem
+
+.nav
+  padding-top: 6px
+  a
+    margin-left: 10px
+
+    &:first-child
+      padding-left: 5px
+      margin-left: 0
+
+.copyright
+  a,
+  a:hover
+    border: none
+    color: white
+    background: $main_color
+    font-size: 15px
+    background: $main_color
+    display: block
+    height: 30px
+    float: right
+    margin-left: 10px
+    padding: 3px 10px 0 10px
+
+.year
+  padding-top: 6px
+  display: block
+  float: left
+
+
+@import "input"
+@import "table"

@@ -1,0 +1,41 @@
+input
+  outline: none
+
+input[type="text"],
+input[type="password"]
+  font-size: 1.5rem
+  border: none
+  border-bottom: 1px solid $main_color2
+
+// header
+header
+  input[type="text"]
+    font-size: 1.2rem
+    width: 200px
+
+  input[type="submit"]
+    background: transparent url("images/search.png") no-repeat
+    border-style: none
+    height: 14px
+    width: 14px
+
+// central-block
+.central-block
+  input[type="submit"],
+    color: $main_color
+    border: 1px solid $main_color2
+    font-size: 1.5rem
+    line-height: 1.5rem
+    padding: 5px 10px
+    box-sizing: border-box
+    background: none
+    width: 100%
+
+    &:hover
+      background: $main_color
+      color: white
+
+  input[type="text"],
+  input[type="password"]
+    margin-bottom: 15px
+    width: 100%

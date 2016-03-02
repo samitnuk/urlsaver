@@ -2,64 +2,38 @@ doctype html
 html
   head
     meta(charset="utf-8")
-    
+
     block title
-    
+
+    meta(name="description", content="Application for saving URLs from browser address bar")
+    meta(name="author", content="Basil Dubyk")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    meta(name="keywords", content="URLSAVER DESCRIPTION WILL BE HERE")
-    link(rel="shortcut icon", href=url_for("static", filename="/img/favicon.png"))
 
-    script(typetype="application/x-javascript") addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    link(rel="stylesheet", href=url_for("static", filename="css/normalize.css"))
+    link(rel="stylesheet", href=url_for("static", filename="css/style.css"))
+    link(rel="shortcut icon", href=url_for("static", filename="img/favicon.ico"))
 
-    //- General styles and scripts
-    link(href=url_for("static", filename="css/bootstrap.min.css"), rel="stylesheet", type="text/css")
-    link(href=url_for("static", filename="css/style.css"), rel="stylesheet", type="text/css")
-    link(href=url_for("static", filename="css/font-awesome.css"), rel="stylesheet")
-    script(src=url_for("static", filename="js/jquery.min.js"))
-    script(src=url_for("static", filename="js/bootstrap.min.js"))
-
-    //- my styles
-    link(href=url_for("static", filename="css/mystyle.css"), rel="stylesheet", type="text/css")
-
-    //- Additional styles and scripts for each page
-    block scripts
-    
   body
-    #wrapper
-      nav.navbar-default.navbar-static-top(role="navigation")
-        .navbar-header
-          button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          h1
-            a.navbar-brand(href=url_for("main")) urlsaver
-        .border-bottom
-          .full-left
-            form.navbar-left-right
-              input(type="text", value="Search...", onfocus="this.value = '';", onblur="if (this.value == '') {this.value = 'Search...';}")
-              input.fa.fa-search(type="submit", value="")
-            .clearfix
+    .container
+      header
+        .logo
+          a(href=url_for("main")) urlsaver
+
+        block search 
+
+      block groups
+
+      .main
         
-        block buttons
+        block main
 
-        .clearfix
+      footer
+        .nav
 
-        block navigation
+          block nav
 
-      #page-wrapper.gray-bg.dashboard-1
-        .content-main
-          .banner
-            h2
-              a(href="index.html") urlsaver
-              i.fa.fa-angle-right
-              block currentpage
-          
-          block content
-          
-          .copy
-            p &copy; 2016 urlsaver.ua | used template designed by 
-              a(href="http://w3layouts.com/", target="_blank") W3layouts
-
-      .clearfix
+          a(href=url_for("contact")) Contact
+          a(href=url_for("about")) About
+        .copyright
+          .year 2016
+          a(href=url_for("main")) urlsaver.ua

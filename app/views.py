@@ -24,7 +24,7 @@ from helpers import add_scheme, url_exists, get_title
 
 def get_urls():
     return db.session.query(Locator)\
-                            .filter_by(username=current_user.username)\
+                            .filter_by(email=current_user.email)\
                             .order_by(desc(Locator.id))
 
 def get_groupnames():
@@ -34,7 +34,7 @@ def get_groupnames():
 def save_url(path, groupname):
     locator = Locator(url=add_scheme(path), title=get_title(path),
                       groupname=groupname, date=datetime.today(),
-                      username=current_user.username)
+                      email=current_user.email)
     db.session.add(locator)
     db.session.commit()
     if getattr(session, 'url', ''):
@@ -50,7 +50,7 @@ def main():
             save_url(session['url'], getattr(session, 'groupname', ''))
         return render_template('urls.jade', urls=get_urls(),
                                             groupnames=get_groupnames())
-    return render_template('index.jade')
+    return render_template('home.jade')
 
 #----------------------------------------------------------------------------
 @app.route('/<path:path>/')
@@ -93,9 +93,7 @@ app.register_blueprint(bp)
 def register():
     form = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
-        user = User(username=form.username.data,
-                    email=form.email.data,
-                    password=form.password.data)
+        user = User(email=form.email.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
         login_user(user, remember=True)
@@ -165,6 +163,16 @@ def delete_url(id):
     db.session.query(Locator).filter_by(id=id).delete()
     db.session.commit()
     return redirect(url_for('main'))
+
+#----------------------------------------------------------------------------
+@app.route('/contact/')
+def contact():
+    return render_template('contact.jade')
+
+#----------------------------------------------------------------------------
+@app.route('/about/')
+def about():
+    return render_template('about.jade')
 
 #----------------------------------------------------------------------------
 @app.errorhandler(404)

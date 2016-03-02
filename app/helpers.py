@@ -8,6 +8,7 @@ requests.packages.urllib3.disable_warnings()
 
 from bs4 import BeautifulSoup
 
+# Googlebot user-agent string
 user_agent = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 
 def add_scheme(url):

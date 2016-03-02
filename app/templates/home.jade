@@ -1,0 +1,14 @@
+extends ./base.jade
+
+block title
+  title Home &#124; urlsaver.ua
+
+block main
+  .central-block.fullwidth
+    h1 Welcom to urlsaver
+    | This site will help to to save URLs from your browser's address bar.
+
+
+block nav
+  a(href=url_for("login")) Login
+  a(href=url_for("register")) Register

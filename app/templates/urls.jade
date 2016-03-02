@@ -1,63 +1,42 @@
 extends ./base.jade
 
 block title
-  title List of saved URLs
+  title Saved URLs &#124; urlsaver.ua
 
-block scripts
-  script(src=url_for("static", filename="js/jquery.metisMenu.js"))
-  script(src=url_for("static", filename="js/jquery.slimscroll.min.js"))
+block search
+  form.search
+    input(type="text")
+    input(type="submit", value="")
 
-  link(href=url_for("static", filename="css/custom.css"), rel="stylesheet")
-  script(src=url_for("static", filename="js/custom.js"))
+block groups
+  .groups
+    | &#124; 
+    a(href=url_for('main')) all links 
+    | &#124;
+    for groupname in groupnames
+      if groupname != ''
+        a(href=url_for('urls_by_group', groupname=groupname)) #{groupname} 
+        | &#124; 
+    a(href=url_for('urls_by_group', groupname='ungrouped')) ungrouped links 
+    | &#124;
 
-block buttons
-  .my-button-right
-    a(href=url_for('logout'))
-      button(type="button") Logout
+block main
+  table
+    tbody
+      for url in urls
+        tr
+          td.pageicon
+            img(src="http://www.google.com/s2/favicons?domain=#{url.url}")
+          td
+            a(href='#{url.url}') #{url.title}
+          td
+            | #{url.date}
+          td
+            .edit
+              a(href=url_for('edit_url', id=url.id)) edit 
+              | &#124; 
+              a(href=url_for('delete_url', id=url.id)) delete
 
-block navigation
-  .navbar-default.sidebar(role="navigation")
-    .sidebar-nav.navbar-collapse
-      ul#side-menu.nav
-        li
-          a(href=url_for('main')).hvr-bounce-to-right
-            i.fa.fa-list.nav_icon
-            span.nav-label All links
-        li
-          a(href=url_for('urls_by_group', groupname='ungrouped')).hvr-bounce-to-right
-            i.fa.fa-indent.nav_icon
-            span.nav-label Ungrouped links
-        for groupname in groupnames
-          li
-            if groupname != ''
-              a(href=url_for('urls_by_group', groupname=groupname)).hvr-bounce-to-right
-                i.fa.fa-indent.nav_icon
-                span.nav-label - #{groupname}
+block nav
+  a(href=url_for("logout")) Logout
 
-block currentpage
-  span list of saved URLs
-
-block content
-  .blank
-    .blank-page
-      .my-col-md-12
-        table.table.table-hover
-          thead
-            tr
-              th 
-              th Title
-              th Date
-              th
-
-          tbody
-            for url in urls 
-              tr
-                td
-                  img(src="http://www.google.com/s2/favicons?domain=#{url.url}")
-                td
-                  p
-                    a(href='#{url.url}') #{url.title}
-                td #{url.date}
-                td
-                  a(href=url_for('edit_url', id=url.id)) edit / 
-                  a(href=url_for('delete_url', id=url.id)) delete 
