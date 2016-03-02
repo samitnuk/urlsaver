@@ -6,12 +6,10 @@ from app import db
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(64), unique = True)
     email = db.Column(db.String(120), unique = True)
     pwdhash = db.Column(db.String(54))
     
-    def __init__(self, username, email, password):
-        self.username = username
+    def __init__(self, email, password):
         self.email = email.lower()
         self.pwdhash = generate_password_hash(password)
 
@@ -41,7 +39,7 @@ class Locator(db.Model):
     title = db.Column(db.String(500))
     groupname = db.Column(db.String(25))
     date = db.Column(db.Date)
-    username = db.Column(db.String(64), ForeignKey('user.username'))
+    email = db.Column(db.String(64), ForeignKey('user.email'))
 
     def __repr__(self):
         return '<URL %r>' % (self.url)

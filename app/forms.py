@@ -7,10 +7,10 @@ from models import User, Locator
 
 #----------------------------------------------------------------------------
 class LoginForm(Form):
-    username = TextField('Username', [validators.Required()])
+    email = TextField('Email', [validators.Required()])
     password = PasswordField('Password', [validators.Required()])
 
-    def validate_username(self, field):
+    def validate_email(self, field):
         user = self.get_user()
 
         if user is None:
@@ -21,11 +21,10 @@ class LoginForm(Form):
 
     def get_user(self):
         return db.session.query(User)\
-            .filter_by(username=self.username.data).first()
+            .filter_by(email=self.email.data).first()
 
 #----------------------------------------------------------------------------
 class RegistrationForm(Form):
-    username = TextField('Username', [validators.Required()])
     email = TextField('Email Address', [validators.Required()])
     password = PasswordField('Password', [validators.Required()])
     confirm = PasswordField('Repeat Password',
@@ -33,10 +32,10 @@ class RegistrationForm(Form):
                              validators.EqualTo('password',
                              message='Passwords must match.')])
 
-    def validate_username(self, field):
+    def validate_email(self, field):
         if db.session.query(User)\
-            .filter_by(username=self.username.data).count() > 0:
-            raise validators.ValidationError('Duplicate username.')
+            .filter_by(email=self.email.data).count() > 0:
+            raise validators.ValidationError('Duplicate email.')
 
 #----------------------------------------------------------------------------
 class EditForm(Form):
