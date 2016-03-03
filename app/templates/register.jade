@@ -6,7 +6,7 @@ block title
   title Register &#124; urlsaver.ua
 
 block main
-  .central-block
+  .width-50
     form(method="post", action=url_for("register"))
       | #{form.csrf_token}
       | !{render_field(form.email, placeholder="Email")}
@@ -15,6 +15,6 @@ block main
       input(type="submit", value="Register")
     br
     br
-    | Already have an account? &#124;
-    a(href=url_for("login")) Login
+    | Already have an account? &#124; 
+    a(href=url_for("login")) Login 
     | &#124;

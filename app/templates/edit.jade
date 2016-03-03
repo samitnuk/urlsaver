@@ -6,11 +6,10 @@ block title
   title Edit &#124; urlsaver.ua
 
 block main
-  .central-block.fullwidth
+  .width-80
     form(method="post", action=url_for("edit_url", id=url.id))
       | #{form.csrf_token}
       | !{render_field(form.title, value=url.title)}
       | !{render_field(form.url, value=url.url)}
-      | !{render_field(form.groupname, placeholder="--groupname",value=url.groupname)}
+      | !{render_field(form.groupname, placeholder=" -- please enter groupname here --",value=url.groupname)}
       input(type="submit", value="Save changes")
-

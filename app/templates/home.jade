@@ -4,9 +4,18 @@ block title
   title Home &#124; urlsaver.ua
 
 block main
-  .central-block.fullwidth
-    h1 Welcom to urlsaver
-    | This site will help to to save URLs from your browser's address bar.
+  .width-50
+    h1 Welcom to urlsaver!
+    | This site will help you to save URLs from your browser's address bar.
+    | Please 
+    a(href=url_for("login")) Login 
+    | or 
+    a(href=url_for("register")) Register 
+    | and you can start saving (:
+    br
+    br
+    | For saving any URL just add before it <strong>urlsaver.ua/</strong>
+    | or <strong>groupname.urlsaver.ua/</strong> if you want save it to some group.
 
 
 block nav
