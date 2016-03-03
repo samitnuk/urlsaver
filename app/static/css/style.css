@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Comfortaa&subset=latin,cyrillic);
-
 html {
   font-size: 62.5%; }
 
@@ -10,15 +9,14 @@ body {
   font-family: "Comfortaa", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #888; }
 
+h1 {
+  font-size: 1.5rem; }
+
 a {
   text-decoration: none;
   color: teal; }
   a:hover {
     color: #888; }
-
-h1 {
-  font-size: 1.5rem;
-}
 
 .container {
   max-width: 860px;
@@ -54,8 +52,12 @@ header {
   margin-top: 25px;
   padding: 5px; }
 
-.central-block {
+.width-50 {
   width: 50%;
+  margin: 0 auto; }
+
+.width-80 {
+  width: 80%;
   margin: 0 auto; }
 
 .main {
@@ -111,7 +113,8 @@ header input[type="submit"] {
   height: 14px;
   width: 14px; }
 
-.central-block input[type="submit"] {
+.width-50 input[type="submit"],
+.width-80 input[type="submit"] {
   color: teal;
   border: 1px solid #888;
   font-size: 1.5rem;
@@ -120,13 +123,20 @@ header input[type="submit"] {
   box-sizing: border-box;
   background: none;
   width: 100%; }
-  .central-block input[type="submit"]:hover {
+  .width-50 input[type="submit"]:hover,
+  .width-80 input[type="submit"]:hover {
     background: teal;
     color: white; }
-.central-block input[type="text"],
-.central-block input[type="password"] {
+.width-50 input[type="text"],
+.width-50 input[type="password"],
+.width-80 input[type="text"],
+.width-80 input[type="password"] {
   margin-bottom: 15px;
   width: 100%; }
+.width-50 p,
+.width-80 p {
+  margin-top: -10px;
+  text-align: right; }
 
 table {
   min-width: 100%;
@@ -138,13 +148,13 @@ table {
   text-align: right; }
 
 .edit {
-  display: none; }
+  visibility: collapse; }
 
 tr:hover {
   background-color: #EEE; }
 
 tr:hover .edit {
-  display: block;
+  visibility: visible;
   font-size: 12px;
   text-align: right; }
 
@@ -157,5 +167,3 @@ td {
 
 .pageicon {
   width: 16px; }
-
-/*# sourceMappingURL=style.css.map */
