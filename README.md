@@ -4,7 +4,7 @@ Saving URLs (and other text) from browser address bar.
 _This repository created, because with it for me will be easier to work from differ PCs. If somebody will read this I must to say sorry for my English, but I will be glad for any comments :)_
 
 I realy like how [saved.io](http://saved.io/) works. And it has very minimalistic design.
-Because I want to learn Python (like a hobby) and how it can be used for web, I will try to make something similar to __saved.io__ using __Flask__, __Bootstrap__ and many pieces of __Python__ code from the interenet.
+Because I want to learn Python (like a hobby) and how it can be used for web, I will try to make something similar to __saved.io__ using __Flask__ and many pieces of __Python__ code from the interenet.
 
 For now I can test all this just on my PC, but in this app I will use URL "urlsaver.ua" instead of "127.0.0.1".
 
