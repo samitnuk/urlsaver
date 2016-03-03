@@ -32,6 +32,7 @@ def get_groupnames():
 
 
 def save_url(path, groupname):
+    date = datetime.today()
     locator = Locator(url=add_scheme(path), title=get_title(path),
                       groupname=groupname, date=datetime.today(),
                       email=current_user.email)

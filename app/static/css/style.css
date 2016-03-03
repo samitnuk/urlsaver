@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Comfortaa&subset=latin,cyrillic);
+@import url(https://fonts.googleapis.com/css?family=Rubik&subset=latin,cyrillic);
 html {
   font-size: 62.5%; }
 
@@ -6,7 +6,7 @@ body {
   font-size: 1.2em;
   line-height: 1.5;
   font-weight: 400;
-  font-family: "Comfortaa", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Rubik", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #888; }
 
 h1 {

@@ -29,8 +29,8 @@ block main
             img(src="http://www.google.com/s2/favicons?domain=#{url.url}")
           td
             a(href='#{url.url}') #{url.title}
-          td
-            | #{url.date}
+          td.date
+            | #{url.date.strftime('%d.%m.%y')}
           td
             .edit
               a(href=url_for('edit_url', id=url.id)) edit 
