@@ -4,3 +4,4 @@ venv/
 db_repository/
 .sass-cache/
 *.map
+search.db/
