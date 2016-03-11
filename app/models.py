@@ -1,7 +1,8 @@
 from sqlalchemy import ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask.ext.whooshalchemy import whoosh_index
 
-from app import db
+from app import db, app
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -34,12 +35,17 @@ class User(db.Model):
 # class with name URL does not work (URL - Uniform Resource Locator)
 class Locator(db.Model):
     __tablename__ = 'locator'
+    __searchable__ = ['url', 'title'] # for whooshalchemy
     id = db.Column(db.Integer, primary_key = True)
     url = db.Column(db.String(500))
     title = db.Column(db.String(500))
     groupname = db.Column(db.String(25))
-    date = db.Column(db.Date)
+    date = db.Column(db.DateTime)
     email = db.Column(db.String(64), ForeignKey('user.email'))
 
     def __repr__(self):
         return '<URL %r>' % (self.url)
+
+from flask.ext.whooshalchemy import whoosh_index
+whoosh_index(app, Locator)
+
