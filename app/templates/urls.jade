@@ -1,11 +1,14 @@
 extends ./base.jade
 
+{% from "_formhelpers.jade" import render_field %}
+
 block title
   title Saved URLs &#124; urlsaver.ua
 
 block search
-  form.search
-    input(type="text")
+  form(method="post", action=url_for('main')).search
+    | #{form.csrf_token}
+    | !{render_field(form.search)}
     input(type="submit", value="")
 
 block groups
@@ -30,7 +33,7 @@ block main
           td
             a(href='#{url.url}') #{url.title}
           td.date
-            | #{url.date.strftime('%d.%m.%y')}
+            | #{url.date.strftime('%d.%m.%y | %H:%M')}
           td
             .edit
               a(href=url_for('edit_url', id=url.id)) edit 
