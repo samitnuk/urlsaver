@@ -8,7 +8,7 @@ from flask.ext.login import (LoginManager, login_user, logout_user,
 
 from app import app, bp, db
 from models import User, Locator
-from forms import LoginForm, RegistrationForm, EditForm
+from forms import LoginForm, RegistrationForm, EditForm, SearchForm
 
 lm = LoginManager()
 lm.init_app(app)
@@ -25,16 +25,16 @@ from helpers import add_scheme, url_exists, get_title
 def get_urls():
     return db.session.query(Locator)\
                             .filter_by(email=current_user.email)\
-                            .order_by(desc(Locator.id))
+                            .order_by(desc(Locator.date))
 
 def get_groupnames():
-    return [x[0] for x in list(set(db.session.query(Locator.groupname)))]
+    return [x[0] for x in list(set(db.session.query(Locator.groupname) \
+                                   .filter_by(email=current_user.email)))]
 
 
 def save_url(path, groupname):
-    date = datetime.today()
     locator = Locator(url=add_scheme(path), title=get_title(path),
-                      groupname=groupname, date=datetime.today(),
+                      groupname=groupname, date=datetime.now(),
                       email=current_user.email)
     db.session.add(locator)
     db.session.commit()
@@ -44,19 +44,23 @@ def save_url(path, groupname):
     return redirect(url_for('main'))
 
 #/ ROUTES /------------------------------------------------------------------
-@app.route('/')
+
+@app.route('/', methods=['GET', 'POST'])
 def main():
     if current_user.is_authenticated:
         if getattr(session, 'url', ''):
             save_url(session['url'], getattr(session, 'groupname', ''))
-        return render_template('urls.jade', urls=get_urls(),
+        form = SearchForm(request.form)
+        if request.method == 'POST' and form.validate_on_submit():
+            return redirect(url_for('search_results', query = form.search.data))
+        return render_template('urls.jade', form=form,
+                                            urls=get_urls(),
                                             groupnames=get_groupnames())
     return render_template('home.jade')
 
-#----------------------------------------------------------------------------
+
 @app.route('/<path:path>/')
 def main1(path):
-    # main_func(path, '')
     if path:
         if url_exists(path):
             if request.query_string:
@@ -70,7 +74,7 @@ def main1(path):
 
     return redirect(url_for('main'))
 
-#----------------------------------------------------------------------------
+
 # groupname - subdomain in blueprint
 @bp.route("/<path:path>/")
 def main2(groupname, path):
@@ -89,7 +93,7 @@ def main2(groupname, path):
 # Register the blueprint into the application
 app.register_blueprint(bp)
 
-#----------------------------------------------------------------------------
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
@@ -101,7 +105,7 @@ def register():
         return redirect(url_for('main'))
     return render_template('register.jade', form=form)
 
-#----------------------------------------------------------------------------
+
 @app.route('/restore_password/', methods=['GET', 'POST'])
 def restore_password():
     # form = RegistrationForm(request.form)
@@ -115,7 +119,7 @@ def restore_password():
     #     return redirect(url_for('main'))
     return redirect(url_for('main'))
 
-#----------------------------------------------------------------------------
+
 @app.route('/login/', methods = ['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
@@ -125,25 +129,30 @@ def login():
         return redirect(url_for('main'))
     return render_template('login.jade', form=form)
 
-#----------------------------------------------------------------------------
+
 @app.route('/logout/')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('main'))
 
-#----------------------------------------------------------------------------
-@app.route('/groupname/<groupname>')
+
+@app.route('/groupname/<groupname>/')
 @login_required
 def urls_by_group(groupname):
+    form = SearchForm(request.form)
+    if request.method == 'POST':
+        return redirect(url_for('search_results', query = form.search.data))
     if groupname == 'ungrouped':
         groupname = ''
-    urls = db.session.query(Locator).filter_by(groupname=groupname)\
-                                    .order_by(desc(Locator.id))
-    return render_template('urls.jade', urls=urls, 
+    urls = db.session.query(Locator).filter_by(groupname=groupname) \
+                                    .filter_by(email=current_user.email) \
+                                    .order_by(desc(Locator.date)).all()
+    return render_template('urls.jade', form=form,
+                                        urls=urls, 
                                         groupnames=get_groupnames())
 
-#----------------------------------------------------------------------------
+
 @app.route('/edit/<int:id>/', methods = ['GET', 'POST'])
 @login_required
 def edit_url(id):
@@ -157,7 +166,7 @@ def edit_url(id):
         return redirect(url_for('main'))
     return render_template('edit.jade', form=form, url=url_row)    
 
-#----------------------------------------------------------------------------
+
 @app.route('/delete/<int:id>/')
 @login_required
 def delete_url(id):
@@ -165,18 +174,32 @@ def delete_url(id):
     db.session.commit()
     return redirect(url_for('main'))
 
-#----------------------------------------------------------------------------
+
+@app.route('/search_results/<query>')
+@login_required
+def search_results(query):
+    form = SearchForm(request.form)
+    if request.method == 'POST' and form.validate_on_submit():
+        return redirect(url_for('search_results', query = form.search.data))
+    results = Locator.query.whoosh_search(query).\
+                            filter_by(email=current_user.email)
+    for r in results.order_by(desc(Locator.id)):
+        print r.id, r.date
+    return render_template('urls.jade', form=form,
+                                        urls=results,
+                                        groupnames=get_groupnames())
+
+
 @app.route('/contact/')
 def contact():
     return render_template('contact.jade')
 
-#----------------------------------------------------------------------------
+
 @app.route('/about/')
 def about():
     return render_template('about.jade')
 
-#----------------------------------------------------------------------------
+
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html',
-                           error_msg = app.config['ERROR_404']), 404
+    return render_template('404.jade')
