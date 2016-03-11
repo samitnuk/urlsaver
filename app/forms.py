@@ -42,3 +42,7 @@ class EditForm(Form):
     title = TextField('title', [validators.Required()])
     url = TextField('url', [validators.Required()])
     groupname = TextField('groupname')
+
+#----------------------------------------------------------------------------
+class SearchForm(Form):
+    search = TextField('search', [validators.Required()])
