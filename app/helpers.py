@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 import requests
-# from requests.exceptions import ConnectionError
 from urlparse import urlparse
 
 # without this will be received SNIMissingWarning from https sites
@@ -18,10 +16,9 @@ def add_scheme(url):
 
 def url_exists(url):
     try:
-        # without User-agent from some https sites will be received 403
         r = requests.head(add_scheme(url),
                           headers={'user-agent': user_agent}, verify=False)
-        return r.status_code #== requests.codes.ok # == 200
+        return r.status_code # requests.codes.ok == 200
     except:
         return False
 
