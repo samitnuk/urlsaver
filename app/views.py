@@ -38,7 +38,7 @@ def save_url(path, groupname):
                       email=current_user.email)
     db.session.add(locator)
     db.session.commit()
-    if getattr(session, 'url', ''):
+    if session['url']:
         session['url'] = ''
         session['groupname'] = ''
     return redirect(url_for('main'))
@@ -48,8 +48,8 @@ def save_url(path, groupname):
 @app.route('/', methods=['GET', 'POST'])
 def main():
     if current_user.is_authenticated:
-        if getattr(session, 'url', ''):
-            save_url(session['url'], getattr(session, 'groupname', ''))
+        if session['url']:
+            save_url(session['url'], session['groupname'])
         form = SearchForm(request.form)
         if request.method == 'POST' and form.validate_on_submit():
             return redirect(url_for('search_results', query = form.search.data))
@@ -61,16 +61,15 @@ def main():
 
 @app.route('/<path:path>/')
 def main1(path):
-    if path:
-        if url_exists(path):
-            if request.query_string:
-                path = path + '/?' + request.query_string
-            if current_user.is_authenticated:
-                save_url(path, groupname='')
-            else:
-                session['url'] = path
-                session['groupname'] = ''
-                return redirect(url_for('login'))
+    if url_exists(path):
+        if request.query_string:
+            path = path + '/?' + request.query_string
+        if current_user.is_authenticated:
+            save_url(path, groupname='')
+        else:
+            session['url'] = path
+            session['groupname'] = ''
+            return redirect(url_for('login'))
 
     return redirect(url_for('main'))
 
