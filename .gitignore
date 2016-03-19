@@ -5,3 +5,6 @@ db_repository/
 .sass-cache/
 *.map
 search.db/
+
+# file with username and password for Flask-Mail 
+local_config.py
