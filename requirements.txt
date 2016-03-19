@@ -3,6 +3,7 @@ sqlalchemy-migrate
 flask-wtf
 flask-login
 Flask-WhooshAlchemy
+Flask-Mail
 pyjade
 requests
 beautifulsoup4
@@ -10,4 +11,3 @@ beautifulsoup4
 Flask-SQLAlchemy==1.0
 Whoosh==2.6.0
 blinker==1.3
-
