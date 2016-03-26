@@ -2,25 +2,28 @@
 from datetime import datetime
 from sqlalchemy import desc
 
-from flask import render_template, redirect, request, session, url_for
+from flask import render_template, redirect, request, session, url_for, flash
 from flask.ext.login import (LoginManager, login_user, logout_user,
                              current_user, login_required)
+from flask.ext.mail import Mail, Message
 
 from app import app, bp, db
 from models import User, Locator
-from forms import LoginForm, RegistrationForm, EditForm, SearchForm
+from forms import (LoginForm, RegistrationForm, EditForm, SearchForm,
+                   RestorePasswordForm)
+
+from helpers import add_scheme, url_exists, get_title, get_new_password
 
 lm = LoginManager()
 lm.init_app(app)
+
+mail=Mail(app)
 
 @lm.user_loader
 def get_user(user_id):
     return db.session.query(User).get(user_id)
 
 #/ INNER HELPERS /-----------------------------------------------------------
-
-# from urlparse import urlparse
-from helpers import add_scheme, url_exists, get_title
 
 def get_urls():
     return db.session.query(Locator)\
@@ -52,7 +55,8 @@ def main():
             save_url(session['url'], session['groupname'])
         form = SearchForm(request.form)
         if request.method == 'POST' and form.validate_on_submit():
-            return redirect(url_for('search_results', query = form.search.data))
+            return redirect(url_for('search_results',
+                                    query = form.search.data))
         return render_template('urls.jade', form=form,
                                             urls=get_urls(),
                                             groupnames=get_groupnames())
@@ -107,16 +111,23 @@ def register():
 
 @app.route('/restore_password/', methods=['GET', 'POST'])
 def restore_password():
-    # form = RegistrationForm(request.form)
-    # if request.method == 'POST' and form.validate_on_submit():
-    #     user = User(username=form.username.data,
-    #                 email=form.email.data,
-    #                 password=form.password.data)
-    #     db.session.add(user)
-    #     db.session.commit()
-    #     login_user(user, remember=True)
-    #     return redirect(url_for('main'))
-    return redirect(url_for('main'))
+    form = RestorePasswordForm(request.form)
+    if request.method == 'POST' and form.validate_on_submit():
+        email = form.email.data
+        new_password = get_new_password()
+        # msg = Message('Restore password | urlsaver.ua',
+	    #               sender = MAIL_USERNAME,
+	    #               recipients = [email])
+        # msg.body = render_template('restore_pass_email.jade',
+        #                            password=new_password)
+	    # mail.send(msg)
+        # user = db.session.query(Locator).filter_by(email=email).first()
+        # user.password = new_password
+        # db.session.commit()
+        flash('Please check you email for new password')
+        return redirect(url_for('login'))
+
+    return render_template('restore_password.jade', form=form)
 
 
 @app.route('/login/', methods = ['GET', 'POST'])
@@ -148,7 +159,7 @@ def urls_by_group(groupname):
                                     .filter_by(email=current_user.email) \
                                     .order_by(desc(Locator.date)).all()
     return render_template('urls.jade', form=form,
-                                        urls=urls, 
+                                        urls=urls,
                                         groupnames=get_groupnames())
 
 
@@ -163,7 +174,7 @@ def edit_url(id):
         url_row.groupname = form.groupname.data
         db.session.commit()
         return redirect(url_for('main'))
-    return render_template('edit.jade', form=form, url=url_row)    
+    return render_template('edit.jade', form=form, url=url_row)
 
 
 @app.route('/delete/<int:id>/')
