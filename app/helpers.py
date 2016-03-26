@@ -1,3 +1,6 @@
+import random
+import string
+
 import requests
 from urlparse import urlparse
 
@@ -29,11 +32,17 @@ def get_title(url):
     soup = BeautifulSoup(r.text, "html.parser")
     return soup.title.text
 
+def get_new_password():     # Return a random alphanumerical password
+  password = ''
+  for x in range(8):
+      password += random.choice(string.ascii_letters + string.digits)
+  return password
+
 #/ FOR TESTS /---------------------------------------------------------------
 def main():
     urls = ['https://www.behance.net/gallery/18264987/Biotop-from-Polygonia']
     print
-    for url in urls:    
+    for url in urls:
         if url_exists(url):
             print '-->', get_title(url)
         else:
@@ -42,5 +51,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
-
