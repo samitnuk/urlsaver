@@ -9,9 +9,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String(120), unique = True)
     pwdhash = db.Column(db.String(54))
-    
+
     def __init__(self, email, password):
         self.email = email.lower()
+        set_password(password)
+
+    def set_password(self, password):
         self.pwdhash = generate_password_hash(password)
 
     def check_password(self, password):
@@ -48,4 +51,3 @@ class Locator(db.Model):
 
 from flask.ext.whooshalchemy import whoosh_index
 whoosh_index(app, Locator)
-
