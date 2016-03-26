@@ -20,21 +20,21 @@ class LoginForm(Form):
             raise validators.ValidationError('Invalid password.')
 
     def get_user(self):
-        return db.session.query(User)\
-            .filter_by(email=self.email.data).first()
+        return db.session.query(User). \
+            filter_by(email=self.email.data).first()
 
 #----------------------------------------------------------------------------
 class RegistrationForm(Form):
     email = TextField('Email Address', [validators.Required()])
     password = PasswordField('Password', [validators.Required()])
     confirm = PasswordField('Repeat Password',
-                            [validators.Required(), 
+                            [validators.Required(),
                              validators.EqualTo('password',
                              message='Passwords must match.')])
 
     def validate_email(self, field):
-        if db.session.query(User)\
-            .filter_by(email=self.email.data).count() > 0:
+        if db.session.query(User). \
+            filter_by(email=self.email.data).count() > 0:
             raise validators.ValidationError('Duplicate email.')
 
 #----------------------------------------------------------------------------
@@ -46,3 +46,11 @@ class EditForm(Form):
 #----------------------------------------------------------------------------
 class SearchForm(Form):
     search = TextField('search', [validators.Required()])
+
+#----------------------------------------------------------------------------
+class RestorePasswordForm(Form):
+    email = TextField('Email Address', [validators.Required()])
+
+    def validate_email(self, field):
+        if not db.session.query(User).filter_by(email=self.email.data).count():
+            raise validators.ValidationError('Enter registered email.')
