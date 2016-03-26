@@ -25,7 +25,8 @@ class LoginForm(Form):
 
 #----------------------------------------------------------------------------
 class RegistrationForm(Form):
-    email = TextField('Email Address', [validators.Required()])
+    email = TextField('Email Address', [validators.Required(),
+                                         validators.Email()])
     password = PasswordField('Password', [validators.Required()])
     confirm = PasswordField('Repeat Password',
                             [validators.Required(),
