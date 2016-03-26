@@ -1,0 +1,15 @@
+extends ./base.jade
+
+block title
+  title Contact &#124; urlsaver.ua
+
+block main
+  .width-50
+    h1 Your new password for urlsaver.ua!
+    hr
+    | !{password}
+
+block nav
+  if not current_user.is_authenticated
+    a(href=url_for("login")) Login
+    a(href=url_for("register")) Register
