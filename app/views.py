@@ -14,8 +14,8 @@ from forms import (LoginForm, RegistrationForm, EditForm, SearchForm,
 
 from helpers import add_scheme, url_exists, get_title, get_new_password
 
-lm = LoginManager()
-lm.init_app(app)
+lm = LoginManager(app)
+# lm.init_app(app)
 
 mail=Mail(app)
 
@@ -115,15 +115,17 @@ def restore_password():
     if request.method == 'POST' and form.validate_on_submit():
         email = form.email.data
         new_password = get_new_password()
-        # msg = Message('Restore password | urlsaver.ua',
-	    #               sender = MAIL_USERNAME,
-	    #               recipients = [email])
-        # msg.body = render_template('restore_pass_email.jade',
-        #                            password=new_password)
-	    # mail.send(msg)
-        # user = db.session.query(Locator).filter_by(email=email).first()
-        # user.password = new_password
-        # db.session.commit()
+        print new_password
+        msg = Message('Restore password | urlsaver.ua',
+                      sender='samitnuk.work@gmail.com',
+	                  recipients=[email])
+        msg.body = 'Your new password: %s' % new_password
+        msg.html = render_template('restore_pass_email.jade',
+                                   password=new_password)
+        mail.send(msg)
+        user = db.session.query(User).filter_by(email=email).first()
+        user.set_password(new_password)
+        db.session.commit()
         flash('Please check you email for new password')
         return redirect(url_for('login'))
 
