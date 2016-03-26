@@ -19,8 +19,9 @@ WHOOSH_BASE = os.path.join(basedir, 'search.db')
 WHOOSH_DISABLED = True
 
 
-MAIL_SERVER='smtp.gmail.com'
-MAIL_PORT=465
-MAIL_USE_SSL=True
+MAIL_SERVER = "smtp.gmail.com"
+MAIL_USE_TLS = True
+MAIL_USE_SSL = False
+MAIL_PORT = 587
 MAIL_USERNAME = MY_MAIL_USERNAME
 MAIL_PASSWORD = MY_MAIL_PASSWORD
