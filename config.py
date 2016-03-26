@@ -1,5 +1,5 @@
 import os
-
+from local_config import MY_MAIL_USERNAME, MY_MAIL_PASSWORD
 
 DEBUG = True
 SERVER_NAME = 'urlsaver.ua:5000'
@@ -17,3 +17,10 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 WHOOSH_BASE = os.path.join(basedir, 'search.db')
 WHOOSH_DISABLED = True
+
+
+MAIL_SERVER='smtp.gmail.com'
+MAIL_PORT=465
+MAIL_USE_SSL=True
+MAIL_USERNAME = MY_MAIL_USERNAME
+MAIL_PASSWORD = MY_MAIL_PASSWORD
