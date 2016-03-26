@@ -5,6 +5,17 @@ extends ./base.jade
 block title
   title Login &#124; urlsaver.ua
 
+
+block groups
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    .messages
+      {% for message in messages %}
+      p {{ message }}
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+
 block main
   .width-50
     form(method="post", action=url_for("login"))
@@ -17,3 +28,6 @@ block main
     | Don't have an account? &#124; 
     a(href=url_for("register")) Register 
     | &#124;
+    br
+    br
+    a(href=url_for("restore_password")) Forgot your password?
